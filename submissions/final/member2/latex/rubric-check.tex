@@ -1,0 +1,65 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext}
+\usepackage[margin=22mm]{geometry}
+\usepackage{booktabs,tabularx,longtable,array}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parskip}{5pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.13}
+\begin{document}
+\section*{Member 2 requirement audit}
+This audit checks the A-II and B-II allocation against the assignment's task wording
+and the Excellent descriptors on pages 13 and 15 of the supplied coursework PDF.
+It does not assign a mark or certify the other members' work.
+
+\small
+\begin{longtable}{@{}p{.27\linewidth}p{.59\linewidth}p{.08\linewidth}@{}}
+\toprule Requirement & Evidence in the revised paper & Status \\
+\midrule
+\endfirsthead
+\toprule Requirement & Evidence in the revised paper & Status \\
+\midrule
+\endhead
+Two service boundaries and five actors & Table I assigns consumer, provider, carrier, broker and auditor separately; the text does not invent an appointed auditor or mandatory broker. & Met \\
+IaaS/PaaS/SaaS responsibility & Table II compares one workload. Cloud Run customers maintain their supplied image; the difference from managed-runtime PaaS is explicit. & Met \\
+Separate model decisions & A-II distinguishes service responsibility from deployment exclusivity; B-II selects serverless PaaS and public cloud separately. & Met \\
+Hybrid/VPC pitfalls & A-II explicitly rejects both category errors required by the task. & Met \\
+XMDrive evidence and five characteristics & Official login, browser and 5 GB evidence; provisional private classification; visible access and application self-service; partial metering/elasticity and undisclosed pooling. & Met \\
+Complete architecture & Respondent, HTTPS ingress, app, live SQL, private exports, daily job, support lookup and staff access are labelled, with data/control arrows and trust boundaries. & Met \\
+Separate data roles and foundational links & SQL serves live lookups; dated files preserve batch input; Spark aggregates. Three original papers are cited without claiming identical mechanisms. & Met \\
+Elasticity and peak rationale & Scale-out and release are explicit. 50/s at assumed 0.5 s implies 25 concurrent requests; maximum four at concurrency 20 is a design assumption, not a benchmark. & Met \\
+Resilience and recovery & Committed rows survive app failure; idempotent retries cover interrupted requests; SQL HA, backups and PITR have separate roles and a regional limitation. & Met \\
+Access, limits and metrics & Staff SSO and server-side roles; separate service identities; instance and connection limits; latency/errors/instance metrics; no claim that an alert is a cap. & Met \\
+PDPA & Privacy notice/consent, log redaction, encryption, correction, case retention and documented cross-border grounds are addressed. & Met \\
+OpenStack alternative & Nova, Neutron, Cinder, Swift and Keystone are mapped; hardware, patches, capacity, failover and backup responsibility is compared. & Met \\
+Authoritative references & Sixteen numbered linked entries include NIST, original papers, current official service documentation and JPDP guidance; versions and regions are registered separately. & Met \\
+Black academic typesetting & LaTeX, Times-family text, black headings/citations/tables and booktabs three-line tables. The diagram alone uses colour. & Checked \\
+Diagram legibility & Flow labels are offset; the job heading and OAuth label were relocated. Final geometry and rendered pages must both pass before packaging. & Checked \\
+Word limit & Course exclusions apply to table bodies and references. Source and PDF counting are both recorded; headings, captions and figure labels are additionally included. & Checked \\
+Humanizer review & All eleven prose paragraphs, captions and uncertainty qualifiers were reviewed after substantive revision with v3.1.0. No AI-detector score is claimed. & Done \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section*{Dependencies before the group submission}
+The highest descriptors also cover the full group report. B-I still needs the
+two-vendor comparison, official-calculator cost assumptions and a recommendation
+consistent with this Google Cloud design. A-I and A-III belong to other members.
+Part C needs the actual prototype, persistence/log/XMDrive evidence, hand trace and
+verified processing of at least 30 synthetic records. The final group report also
+needs its cover, genuine signed contribution record, supplied rubric and
+consistent total word count. None of these is fabricated or marked complete here.
+
+\section*{Editorial and meaning check}
+The second Humanizer pass removed repetitive framing and shortened wording while
+preserving the two actor boundaries, conditional XMDrive classification,
+customer image responsibility, proposed status, selected versions and region,
+daily cutoff, capacity assumption, limits, retry behaviour, retention source and
+cross-border requirement. All eleven prose paragraphs were reviewed; technical
+comparisons required by the task were retained. The figure and table source code
+was changed for layout and accuracy, not by the prose-editing pass.
+
+\input{source-register.tex}
+\end{document}
+

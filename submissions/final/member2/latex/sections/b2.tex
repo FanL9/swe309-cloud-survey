@@ -1,0 +1,23 @@
+\section*{B-II Architecture and design justification}
+
+Figure~\ref{fig:architecture} places Google Cloud Run in Singapore. The service model is serverless PaaS; the deployment model is public cloud. This removes VM host-OS maintenance and scaling execution. Private infrastructure would add hardware and control-plane administration for three IT staff. The proposed managed features are generally available; documentation was checked on 18~November~2026.
+
+\begin{figure}[tbp]
+\centering
+\resizebox{\linewidth}{!}{\input{figures/architecture.tikz}}
+\caption{Proposed survey architecture in \texttt{asia-southeast1}. Solid arrows carry data; dashed arrows invoke jobs. Dashed enclosures mark trust or service-identity boundaries.}
+\label{fig:architecture}
+\end{figure}
+
+HTTPS submissions accept only Good, OK or Poor. Valid responses enter Cloud SQL PostgreSQL~17, indexed by \texttt{response\_id}; support staff retrieve individual records through authenticated application routes. Direct VPC egress and TLS protect the database connection~\cite{connection}. Staff SSO and server-side roles restrict lookup and reporting; knowing an ID grants no permission.
+
+At 00:15 Malaysia time, Cloud Scheduler invokes a Cloud Run job using OAuth~\cite{schedule}. It exports the previous day's consistent SQL snapshot to private Cloud Storage, then PySpark~3.5.7 validates ratings, deduplicates IDs and counts categories locally~\cite{storage,spark}. SQL supplies Bigtable-like serving, dated files fulfil GFS-like storage, and aggregation follows MapReduce's processing role~\cite{bigtable,gfs,mapreduce}. These are role comparisons, not identical mechanisms. Daily results return through the staff application; Cloud Storage replaces manual XMDrive sharing.
+
+Stateless instances expand during the ten-minute campaign and return to zero afterwards, accepting cold starts~\cite{scaling}. Assuming 0.5~s per request, 50~requests/s require 25 concurrent requests; four instances at concurrency~20 leave headroom. This assumption needs validation. Limiting each instance to five database connections controls connection growth. Monitor latency, errors and instance count; temporary instance overshoot and alerts-only budgets prevent a hard spending guarantee~\cite{scaling,budgets}. SQL remains billable while the application is idle.
+
+An instance failure preserves committed database rows; idempotent retries recover interrupted requests. Regional SQL high availability addresses zonal failure, while backups and point-in-time recovery address deletion~\cite{ha}. These do not provide cross-region disaster recovery.
+
+Use separate service identities, least privilege, encryption at rest, consent/notices, log redaction and correction access. Delete records and retained copies after the case's three-year period. Singapore processing requires documented PDPA transfer grounds~\cite{pdpa,transfer}.
+
+An OpenStack~2025.2 private cloud could use Nova VMs, Neutron networks, Cinder database volumes, Swift exports and Keystone identities~\cite{openstack}. Company A would then own hardware, patching, capacity, database failover and backups. Exclusivity does not justify that operating burden unless it becomes a firm requirement.
+

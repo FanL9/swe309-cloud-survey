@@ -1,0 +1,51 @@
+\section*{A-II Cloud models and actors}
+
+Company A consumes Google's platform and provides SaaS to respondents; Table~\ref{tab:actors} distinguishes the actor roles~\cite{nist}. Direct contracting needs no broker. An independent auditor could assess either service; none is appointed.
+
+\begin{table}[htbp]
+\centering
+\caption{Actors at the two service boundaries}
+\label{tab:actors}
+\ifcountonly\else
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Actor & Consumed platform & Provided survey \\
+\midrule
+Consumer & Company A & Respondents \\
+Provider & Google & Company A \\
+Carrier & Internet providers & Internet providers \\
+Broker & None required & None required \\
+Auditor & Independent assessor & Independent assessor \\
+\bottomrule
+\end{tabular}
+\fi
+\end{table}
+
+Table~\ref{tab:responsibility} compares the same workload. Service models allocate operational work; deployment models determine access and infrastructure exclusivity. Combining service models is not hybrid cloud, and a public-cloud VPC alone is not a private cloud~\cite{nist}. SaaS requires checking ID lookup and exports.
+
+\begin{table}[htbp]
+\centering
+\caption{Management responsibility for the survey workload}
+\label{tab:responsibility}
+\ifcountonly\else
+\small
+\begin{tabularx}{\linewidth}{@{}Xccc@{}}
+\toprule
+Responsibility & IaaS VM & \shortstack{PaaS/serverless\\(Cloud Run)} & SaaS survey \\
+\midrule
+Physical infrastructure & Vendor & Vendor & Vendor \\
+Guest/host operating system & Company A & Vendor & Vendor \\
+Image/runtime dependencies & Company A & Company A & Vendor \\
+Application & Company A & Company A & Vendor \\
+Data/access policies & Company A & Company A & Company A \\
+Scaling rules & Company A & Company A & Vendor \\
+Scaling execution & Company A & Vendor & Vendor \\
+\bottomrule
+\end{tabularx}
+\fi
+\end{table}
+
+Cloud Run manages execution; Company A maintains its image and dependencies~\cite{container}. A managed-runtime PaaS would move runtime maintenance to the vendor.
+
+XMDrive is SaaS: XMUM documents campus-ID login, off-campus browser access and a 5~GB student allocation~\cite{xmdrive}. Institutional membership supports a provisional private-cloud classification, although exclusive infrastructure is unconfirmed. Broad network access and file-upload self-service are visible, but uploading is not infrastructure provisioning. Quotas suggest storage measurement without proving billing transparency. Resource pooling is undisclosed, while fixed allocations give students little evidence of rapid elasticity.
+

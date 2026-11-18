@@ -1,1 +1,26 @@
 module,title,url,version_or_release,region,date_checked,availability,notes
+A2,NIST cloud reference architecture,https://www.nist.gov/publications/nist-cloud-computing-reference-architecture,SP 500-292 (2011),N/A,2026-11-18,Published standard,Actors; service and deployment model distinction
+A2,XMUM LINC Online Storage,https://linc.xmu.edu.my/online-storage/,Managed service; version undisclosed,Hosting undisclosed,2026-11-18,Public university documentation,5 GB; campus login; browser and off-campus access; deployment inference only
+B2,Cloud Run autoscaling,https://docs.cloud.google.com/run/docs/about-instance-autoscaling,Managed service; GA,asia-southeast1,2026-11-18,GA,Scale to zero; instance maximum may briefly be exceeded
+B2,Cloud Run locations,https://docs.cloud.google.com/run/docs/locations,Managed service; GA,asia-southeast1,2026-11-18,GA,Singapore selected; standard HTTPS endpoint
+B2,Cloud SQL versions,https://docs.cloud.google.com/sql/docs/postgres/db-versions,PostgreSQL 17; provider-managed minor,asia-southeast1,2026-11-18,GA,Selected major version; not a deployment claim
+B2,Cloud SQL high availability,https://docs.cloud.google.com/sql/docs/postgres/high-availability,Enterprise; regional HA; GA,asia-southeast1,2026-11-18,GA,Zonal failure; backups and PITR; not regional disaster recovery
+B2,Cloud SQL editions,https://docs.cloud.google.com/sql/docs/postgres/choose-edition,Enterprise explicitly selected,asia-southeast1,2026-11-18,GA,Avoid assuming default edition
+B2,Cloud SQL locations,https://docs.cloud.google.com/sql/docs/postgres/locations,Managed service; GA,asia-southeast1,2026-11-18,GA,Singapore availability
+B2,Cloud Run SQL connections,https://docs.cloud.google.com/sql/docs/postgres/connect-run,Private IP; GA,asia-southeast1,2026-11-18,GA,VPC route and TLS configuration
+B2,Direct VPC egress,https://docs.cloud.google.com/run/docs/configuring/vpc-direct-vpc,Managed feature; GA,asia-southeast1,2026-11-18,GA,App and job private SQL access
+B2,Scheduled Cloud Run jobs,https://docs.cloud.google.com/run/docs/execute/jobs-on-schedule,Cloud Run jobs; GA,asia-southeast1,2026-11-18,GA,Cloud Scheduler OAuth jobs API invocation
+B2,Cloud Scheduler locations,https://docs.cloud.google.com/scheduler/docs/locations,Managed service; GA,asia-southeast1,2026-11-18,GA,Proposed 00:15 Asia/Kuala_Lumpur schedule
+B2,Cloud Storage locations,https://docs.cloud.google.com/storage/docs/locations,Standard regional buckets; GA,asia-southeast1,2026-11-18,GA,Private CSV and summary objects
+B2,Storage public access prevention,https://docs.cloud.google.com/storage/docs/public-access-prevention,Managed feature; GA,asia-southeast1,2026-11-18,GA,Prevent public object access; use IAM
+B2,Apache Spark release,https://spark.apache.org/releases/spark-release-3-5-7.html,3.5.7 stable,Proposed job container in asia-southeast1,2026-11-18,Stable release,Single-container local execution; not asserted latest
+B2,Cloud Run monitoring,https://docs.cloud.google.com/run/docs/monitoring,Managed metrics; GA,Regional resources; global control plane,2026-11-18,GA,Latency; errors; instance count
+B2,Budget notifications,https://docs.cloud.google.com/billing/docs/how-to/budgets,Alerts-only budgets,Billing account / project,2026-11-18,GA,Alerts do not impose a spending cap
+B2,PDPA principles,https://www.pdp.gov.my/en/principles-of-personal-data-protection/,Act 709 principles,Malaysia,2026-11-18,Official guidance,Retention; security; notice and access
+B2,Cross-border transfer guideline,https://www.pdp.gov.my/ppdpv1/wp-content/uploads/2025/08/GP_CBPDT_EN.pdf,Guideline 3/2025,Malaysia to Singapore,2026-11-18,Official guidance,Document transfer basis; no compliance certification
+B2,OpenStack release,https://releases.openstack.org/flamingo/,2025.2 Flamingo,Conceptual Malaysia private infrastructure,2026-11-18,Stable / maintained,Nova; Neutron; Cinder; Swift; Keystone; not provisioned
+B2,GFS original paper,https://research.google/pubs/the-google-file-system/,2003,N/A,2026-11-18,Published paper,Storage role analogy
+B2,MapReduce original paper,https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/,2004,N/A,2026-11-18,Published paper,Batch processing role analogy
+B2,Bigtable original paper,https://research.google/pubs/bigtable-a-distributed-storage-system-for-structured-data/,2006,N/A,2026-11-18,Published paper,Online serving role analogy
+A2/B2,Humanizer editorial method,https://github.com/blader/humanizer/blob/v3.1.0/SKILL.md,v3.1.0; MIT,N/A,2026-11-18,Public skill,Natural language edit; claim preservation; no detector score
+A2/B2,Cloud Run container runtime contract,https://docs.cloud.google.com/run/docs/container-contract,Managed service; customer-supplied container,asia-southeast1,2026-11-18,GA,Customer maintains image/runtime dependencies; host execution platform is managed

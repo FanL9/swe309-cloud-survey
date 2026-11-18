@@ -1,0 +1,37 @@
+{
+  "course_scope_conservative_words": 696,
+  "source_conservative_words": 696,
+  "counting_pdf_words": 634,
+  "whole_pdf_displayed_tokens": 921,
+  "diagram_tokens": 82,
+  "limit": 700,
+  "count_scope": "Table bodies and reference list excluded as specified on assignment p.5. Headings, table captions, figure caption, all figure labels, numeric citations and page numbers included. Alphanumeric runs counted; hyphens/slashes split.",
+  "color_violations_outside_figure": [],
+  "flow_segments_checked": 29,
+  "figure_text_line_intersections": [],
+  "latex_pages": 3,
+  "visual_review": "All three final paper pages and the standalone diagram inspected at readable resolution.",
+  "latex_layout_warnings": [],
+  "humanizer": {
+    "project": "https://github.com/blader/humanizer",
+    "version": "3.1.0",
+    "paragraphs_reviewed": 11,
+    "table_captions_reviewed": 2,
+    "figure_captions_reviewed": 1,
+    "detector_score": null,
+    "meaning_checks": [
+      "actors and service boundaries",
+      "conditional private XMDrive inference",
+      "customer container responsibility",
+      "proposed status",
+      "versions and region",
+      "daily cutoff",
+      "0.5 s capacity assumption",
+      "50 requests/s and 25 concurrency",
+      "four instances, 20 concurrency, five connections",
+      "overshoot and alerts-only budgets",
+      "committed versus interrupted requests",
+      "case retention and cross-border grounds"
+    ]
+  }
+}

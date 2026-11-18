@@ -1,0 +1,32 @@
+flowchart LR
+  R["Respondent<br/>500/day, 1 KB<br/>Peak 50 req/s for 10 min"]
+  S["Authorised staff<br/>SSO, ID lookup, reports"]
+  subgraph G["Google Cloud project - asia-southeast1 - PROPOSED"]
+    H["HTTPS endpoint<br/>Cloud Run ingress"]
+    A["Cloud Run application<br/>Validate, authorise, persist<br/>Max setting 4"]
+    subgraph V["Private VPC access boundary"]
+      DB[("Cloud SQL PostgreSQL 17<br/>Live responses, regional HA")]
+    end
+    C["Cloud Scheduler<br/>00:15 Asia/Kuala_Lumpur"]
+    subgraph J["Daily Cloud Run job - separate service identity"]
+      E["Consistent snapshot export"]
+      P["PySpark 3.5.7<br/>Validate, deduplicate, count"]
+    end
+    CSV[("Private Cloud Storage<br/>Dated CSV")]
+    SUM[("Private Cloud Storage<br/>Daily summary")]
+  end
+  R -->|"HTTPS: Good/OK/Poor"| H
+  S <-->|"HTTPS + verified SSO"| H
+  H <--> A
+  A <-->|"Direct VPC egress + TLS<br/>Commit / ID lookup"| DB
+  C -.->|"OAuth: jobs API"| E
+  DB -->|"Snapshot"| E
+  E --> CSV
+  CSV -->|"Read"| P
+  P --> SUM
+  SUM -->|"Authorised report"| A
+  classDef application fill:#F4F8FB,stroke:#087F8C,color:#15334D
+  classDef batch fill:#F0EDF8,stroke:#6956A5,color:#15334D
+  class H,A,DB,CSV,SUM application
+  class C,E,P batch
+

@@ -1,10 +1,10 @@
 # 工作进度
 
 - [ ] A1 云计算概念（Member 1）
-- [ ] A2 云模型、参与者与 XMDrive（Member 2）
+- [x] A2 云模型、参与者与 XMDrive（Member 2；英文片段、责任表及官方依据已完成）
 - [ ] A3 基础系统与现代技术比较（Member 3）
 - [ ] B1 两厂商比较、官方成本估算与推荐（Member 1）
-- [ ] B2 完整架构、安全、弹性与 OpenStack 替代方案（Member 2）
+- [x] B2 完整架构、安全、弹性与 OpenStack 替代方案（Member 2；设计与图源已完成，平台假设待与 B1 对齐）
 - [ ] C1 问卷原型与界面、重启验证、日志、XMDrive（Member 4）
 - [ ] C2 免费资格确认、真实部署、监控及验证（Member 5）
 - [ ] C3 手算、至少 30 条数据、PySpark/Hive 与核对（Member 3）

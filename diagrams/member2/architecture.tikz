@@ -1,0 +1,63 @@
+\begin{tikzpicture}[x=1cm,y=1cm,
+font=\sffamily\fontsize{8.3}{10}\selectfont,
+box/.style={draw=black!48,fill=white,rounded corners=2pt,align=center,inner sep=4pt,line width=.55pt},
+data/.style={-{Stealth[length=2.2mm]},draw=teal!70!black,line width=.8pt},
+both/.style={arrows={Stealth[length=2.2mm]-Stealth[length=2.2mm]},draw=teal!70!black,line width=.8pt},
+control/.style={-{Stealth[length=2.2mm]},draw=violet!75!black,dashed,line width=.8pt},
+flowlabel/.style={font=\sffamily\fontsize{7.5}{9}\selectfont,fill=white,inner sep=1.6pt,text=black},
+boundary/.style={draw=black!42,dashed,rounded corners=3pt,line width=.5pt},
+title/.style={font=\sffamily\fontsize{8}{9.5}\selectfont,text=black,fill=white,inner sep=2pt}]
+% Labels stay in fixed boxes; flow labels have an explicit gap from the route.
+% x=5.98 is reserved for the report-return corridor.
+\path[use as bounding box] (0,-.8) rectangle (16.3,9.55);
+\begin{scope}[on background layer]
+\fill[blue!2] (3.25,0) rectangle (16.1,9.3);
+\draw[boundary] (3.25,0) rectangle (16.1,9.3);
+\draw[boundary,fill=blue!3] (11.1,6.35) rectangle (15.55,8.8);
+\draw[boundary,draw=violet!55,fill=violet!3] (6.1,.55) rectangle (10.1,5.0);
+\end{scope}
+\node[title,anchor=west] at (3.45,9.3) {Google Cloud project};
+\node[title,anchor=west] at (11.3,8.8) {Private SQL access};
+\node[title,anchor=west,text=violet!75!black] at (6.4,.86) {Daily Cloud Run job};
+\node[box,minimum width=2.5cm,minimum height=1.25cm] (respondent) at (1.4,8.5)
+{\textbf{Respondent}\\500/day; 1 KB\\Peak 50 req/s; 10 min};
+\node[box,minimum width=2.5cm,minimum height=1.25cm] (staff) at (1.4,6.35)
+{\textbf{Authorised staff}\\SSO; ID lookup\\Daily reports};
+\node[box,minimum width=2.1cm,minimum height=1.2cm] (endpoint) at (4.6,7.5)
+{\textbf{HTTPS endpoint}\\Cloud Run ingress};
+\node[box,minimum width=3cm,minimum height=1.5cm] (app) at (8,7.5)
+{\textbf{Cloud Run application}\\Validate; authorise\\Persist; retrieve};
+\node[box,minimum width=3.5cm,minimum height=1.5cm] (sql) at (13.3,7.5)
+{\textbf{Cloud SQL}\\PostgreSQL 17\\Live store; regional HA};
+\node[box,minimum width=2.5cm,minimum height=1.35cm] (scheduler) at (4.3,2.45)
+{\textbf{Cloud Scheduler}\\00:15\\Asia/Kuala\_Lumpur};
+\node[box,minimum width=3.1cm,minimum height=1cm] (export) at (8,4.1)
+{\textbf{Snapshot export}};
+\node[box,minimum width=3.1cm,minimum height=1.2cm] (spark) at (8,1.8)
+{\textbf{PySpark 3.5.7}\\Validate; deduplicate; count};
+\node[box,minimum width=3.5cm,minimum height=1cm] (csv) at (13.3,4.1)
+{\textbf{Private Cloud Storage}\\Dated CSV};
+\node[box,minimum width=3.5cm,minimum height=1cm] (summary) at (13.3,1.8)
+{\textbf{Private Cloud Storage}\\Daily summary};
+\draw[data] (respondent.east) -- (4.6,8.5) -- (endpoint.north);
+\draw[both] (staff.east) -- (3.0,6.35) -- (3.0,7.5) -- (endpoint.west);
+\draw[both] (endpoint.east) -- (app.west);
+\draw[both] (app.east) -- node[flowlabel,above=3pt] {SQL/TLS} (sql.west);
+\draw[data] (sql.south) -- (13.3,5.55) --
+node[flowlabel,above=3pt] {snapshot} (8,5.55) -- (export.north);
+\draw[control] (scheduler.east) -- (5.72,2.45) --
+node[flowlabel,left=3pt,pos=.7] {OAuth} (5.72,4.1) -- (export.west);
+\draw[data] (export.east) -- (csv.west);
+\draw[data] (csv.south) -- (13.3,3.05) --
+node[flowlabel,above=3pt] {read} (8,3.05) -- (spark.north);
+\draw[data] (spark.east) -- (summary.west);
+\draw[data] (summary.south) -- (13.3,.4) -- (5.98,.4) --
+node[flowlabel,left=3pt,pos=.78] {report} (5.98,6.95) -- ($(app.west)+(0,-.55)$);
+\draw[data] (.2,-.5) -- (.9,-.5);
+\node[anchor=west,font=\sffamily\fontsize{7.5}{9}\selectfont] at (1.05,-.5) {Data};
+\draw[control] (3.2,-.5) -- (3.9,-.5);
+\node[anchor=west,font=\sffamily\fontsize{7.5}{9}\selectfont] at (4.05,-.5) {Control};
+\draw[boundary] (6.5,-.68) rectangle (7,-.32);
+\node[anchor=west,font=\sffamily\fontsize{7.5}{9}\selectfont] at (7.15,-.5) {Trust boundary};
+\end{tikzpicture}
+

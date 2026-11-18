@@ -1,0 +1,32 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage[margin=22mm]{geometry}
+\usepackage{booktabs,tabularx,array,graphicx,tikz}
+\usetikzlibrary{arrows.meta,calc,backgrounds}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=false,pdfborder={0 0 0},pdftitle={Cloud models and survey architecture},pdfauthor={Member 2}}
+\color{black}
+\linespread{1.05}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{1em}
+\setlength{\textfloatsep}{12pt}
+\setlength{\intextsep}{11pt}
+\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{1.13}
+\renewcommand{\thetable}{\Roman{table}}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{0pt}{11pt}{5pt}{\normalfont\large\bfseries}}
+\makeatother
+\newif\ifcountonly
+\ifdefined\CountOnly\countonlytrue\else\countonlyfalse\fi
+\begin{document}
+\begin{center}{\large\bfseries Cloud models and survey architecture}\end{center}
+\vspace{-6pt}
+\input{sections/a2.tex}
+\input{sections/b2.tex}
+\ifcountonly\else\input{references.tex}\fi
+\end{document}
+

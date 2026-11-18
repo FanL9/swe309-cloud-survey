@@ -1,0 +1,29 @@
+\section*{Service and source register}
+All entries were checked on 18 November 2026. GA means generally available.
+This register is supporting material, separate from the paper's word count.
+\small
+\begin{longtable}{@{}p{.19\linewidth}p{.25\linewidth}p{.20\linewidth}p{.27\linewidth}@{}}
+\toprule
+Item & Version or release & Region & Availability and evidence \\
+\midrule
+\endfirsthead
+\toprule Item & Version or release & Region & Availability and evidence \\
+\midrule
+\endhead
+NIST & SP 500-292 (2011) & Not applicable & Published architecture; actors and models. \\
+XMDrive & Managed service; software version undisclosed & Physical hosting undisclosed & \href{https://linc.xmu.edu.my/online-storage/}{XMUM LINC}; private deployment is a hypothesis. \\
+Cloud Run & Managed platform; no customer-pinned version & asia-southeast1 & GA service and jobs; \href{https://docs.cloud.google.com/run/docs/locations}{region}, \href{https://docs.cloud.google.com/run/docs/about-instance-autoscaling}{scaling}, \href{https://docs.cloud.google.com/run/docs/container-contract}{container contract}. \\
+Cloud SQL & PostgreSQL 17; Enterprise edition proposed & asia-southeast1 & GA; \href{https://docs.cloud.google.com/sql/docs/postgres/db-versions}{versions}, \href{https://docs.cloud.google.com/sql/docs/postgres/choose-edition}{edition}, \href{https://docs.cloud.google.com/sql/docs/postgres/high-availability}{regional HA}. \\
+SQL networking & Private IP, Direct VPC egress, TLS & Same project and region & GA; \href{https://docs.cloud.google.com/sql/docs/postgres/connect-run}{connection guide}. Runtime and job need this path. \\
+Cloud Scheduler & Managed service; no pinned version & asia-southeast1; Asia/Kuala\_Lumpur & GA; \href{https://docs.cloud.google.com/scheduler/docs/locations}{locations}, \href{https://docs.cloud.google.com/run/docs/execute/jobs-on-schedule}{OAuth jobs invocation}. \\
+Cloud Storage & Standard regional buckets & asia-southeast1 & GA; \href{https://docs.cloud.google.com/storage/docs/locations}{locations}, \href{https://docs.cloud.google.com/storage/docs/public-access-prevention}{public access prevention}. \\
+PySpark & Apache Spark 3.5.7 & One proposed job container & \href{https://spark.apache.org/releases/spark-release-3-5-7.html}{Stable release}; not asserted to be latest. Python/Java image dependencies await C3 implementation. \\
+OpenStack & 2025.2 Flamingo & Conceptual exclusive infrastructure & \href{https://releases.openstack.org/flamingo/}{Stable, maintained release}; Nova, Neutron, Cinder, Swift, Keystone. Not provisioned. \\
+Metrics and budget & Managed metrics and alerts-only budgets & Regional resources; billing/project scope & \href{https://docs.cloud.google.com/run/docs/monitoring}{Metrics}, \href{https://docs.cloud.google.com/billing/docs/how-to/budgets}{budgets}. Alerts are not caps. \\
+Foundational papers & GFS 2003; MapReduce 2004; Bigtable 2006 & Historical research & Original papers cited individually; no claim of identical SQL/object-store mechanisms. \\
+PDPA & Act 709 principles; guideline 3/2025 & Malaysia; overseas processing in Singapore & \href{https://www.pdp.gov.my/en/principles-of-personal-data-protection/}{Principles}, \href{https://www.pdp.gov.my/ppdpv1/wp-content/uploads/2025/08/GP_CBPDT_EN.pdf}{transfer guidance}. Three years comes from the case, not a general legal minimum. \\
+Editorial method & Humanizer v3.1.0 & Not applicable & \href{https://github.com/blader/humanizer/blob/v3.1.0/SKILL.md}{Pinned skill}; claim-preserving prose review, not a detector. \\
+\bottomrule
+\end{longtable}
+\normalsize
+
