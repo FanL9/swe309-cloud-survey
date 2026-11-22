@@ -11,7 +11,7 @@
   },
   "input_sha256": "dfc489e02c304fb473515d64b4db2848c6303414b26ed84a5f2ad273dfb379d0",
   "input_name": "c3-table2.csv",
-  "generated_at_utc": "2026-11-22T07:26:02.891374+00:00",
+  "generated_at_utc": "2026-11-22T07:35:46.789564+00:00",
   "scope": "whole supplied CSV; no implicit day filter",
   "deduplication": "first CSV record per exact response_id, before rating validation",
   "rating_policy": "exact Good, OK, Poor; no trimming or case folding",

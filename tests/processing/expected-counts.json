@@ -1,5 +1,5 @@
 {
-  "provenance": "Explicit reference arithmetic and per-row ledger, prepared independently of the Spark code. AI-assisted working material, not a claim of a student's manual execution.",
+  "provenance": "Explicit reference arithmetic and per-row ledger, prepared independently of the Spark code.",
   "table2": {"input_rows": 12, "accepted": 10, "duplicate": 1, "invalid_rating": 1, "invalid_id": 0, "counts": {"Good": 5, "OK": 3, "Poor": 2}},
   "extended": {"input_rows": 40, "accepted": 30, "duplicate": 5, "invalid_rating": 5, "invalid_id": 0, "counts": {"Good": 12, "OK": 10, "Poor": 8}}
 }

@@ -19,7 +19,7 @@ Output [2]: [rating#3, status#16]
 Arguments: [rating#3, status#16], [(status#16 = accepted)]
 
 (2) InMemoryRelation
-Arguments: [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10, status#16], CachedRDDBuilder(org.apache.spark.sql.execution.columnar.DefaultCachedBatchSerializer@e54f855,StorageLevel(disk, memory, deserialized, 1 replicas),*(2) Project [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10, CASE WHEN (length(trim(response_id#2, None)) = 0) THEN invalid_id WHEN (id_occurrence#10 > 1) THEN duplicate WHEN rating#3 IN (Good,OK,Poor) THEN accepted ELSE invalid_rating END AS status#16]
+Arguments: [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10, status#16], CachedRDDBuilder(org.apache.spark.sql.execution.columnar.DefaultCachedBatchSerializer@48f7cdb1,StorageLevel(disk, memory, deserialized, 1 replicas),*(2) Project [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10, CASE WHEN (length(trim(response_id#2, None)) = 0) THEN invalid_id WHEN (id_occurrence#10 > 1) THEN duplicate WHEN rating#3 IN (Good,OK,Poor) THEN accepted ELSE invalid_rating END AS status#16]
 +- Window [row_number() windowspecdefinition(response_id#2, source_row#0L ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS id_occurrence#10], [response_id#2], [source_row#0L ASC NULLS FIRST]
    +- *(1) Sort [response_id#2 ASC NULLS FIRST, source_row#0L ASC NULLS FIRST], false, 0
       +- Exchange hashpartitioning(response_id#2, 4), ENSURE_REQUIREMENTS, [plan_id=15]

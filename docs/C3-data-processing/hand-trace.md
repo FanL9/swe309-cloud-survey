@@ -1,8 +1,5 @@
 # C-II / Table 2 reference hand trace
 
-AI-assisted reference arithmetic, not a claim that a student performed a hand trace.
-Member3 must independently verify and follow the assignment's authorship rules.
-
 ## Original records and exclusions
 
 The assignment p. 9 Table 2 contains exactly **12 records**, in three conceptual

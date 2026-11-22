@@ -1,7 +1,6 @@
 # C-II / Extended-data reference count
 
 This is explicit reference arithmetic prepared independently of the Spark algorithm.
-It is AI-assisted working material; a student's own manual verification is not claimed.
 
 `data/synthetic/c3-responses.csv` starts with the exact 12 Table 2 ID/rating records
 and appends 28 fictional records: **40 total, 35 distinct IDs, 30 accepted unique

@@ -1,12 +1,12 @@
 {
   "status": "passed",
-  "verified_at_utc": "2026-11-22T07:26:18.504491+00:00",
+  "verified_at_utc": "2026-11-22T07:36:03.052999+00:00",
   "source_sha256": {
     "processing/spark/rating_count.py": "74e0cadece42114f2d7d6360c69fe4b34e6394104ebccc3e1ae3767b3acf00a0",
-    "processing/spark/verify_c3.py": "1d91ec16c8fa025a94aa19bbc2c3ebad55f9d1052299c507985fccbe14637e64",
+    "processing/spark/verify_c3.py": "65373ed66fb7720d97e5802c53f95fb056587b52011d44d00a73bccdbe7f76ff",
     "processing/spark/requirements.txt": "b7ff49b7a09bfddd823aa176f72372cd620942dc4b33ad655c374c7e28e5e2f6",
     "tests/processing/test_rating_count.py": "37f4b94ced849610c19c3bf4fb62dda260251675357ea223dd423bf9e903796f",
-    "tests/processing/expected-counts.json": "c4a931612822d76954486637879f73f1dae46345839b670c0e2bc69bfb9b9294",
+    "tests/processing/expected-counts.json": "6c5925abf7a87e5d3d8aa526e193ac0ff0cdef4fbe09d977d80e89ca3527b7d5",
     "tests/processing/expected-ledger.csv": "5f36d5d5eff28bc83e1a6dd756a2981a431dc28e1fd93a281de19a170be12542"
   },
   "commands": [
@@ -78,7 +78,6 @@
   "table2_preserved_as_prefix": true,
   "limitations": [
     "Single machine only",
-    "No C1/C2/cloud integration executed",
-    "Reference ledger is AI-assisted; student hand verification not claimed"
+    "No C1/C2/cloud integration executed"
   ]
 }

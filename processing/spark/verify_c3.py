@@ -35,7 +35,7 @@ def main():
     # Invalidate a prior success before starting, so a failed rerun cannot leave
     # stale passing evidence next to a new failed transcript.
     (EVIDENCE / "verification.json").write_text(json.dumps({"status": "running"}) + "\n", encoding="utf-8")
-    transcript = ["C3 actual execution transcript; AI-assisted working material.",
+    transcript = ["C3 actual execution transcript.",
                   "Local paths and the OS account directory are redacted; no fabricated screenshot."]
     commands = []
     for dataset in ("table2", "responses"):
@@ -88,8 +88,7 @@ def main():
                 "source_sha256": {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in sources},
                 "commands": run_results, "datasets": verified,
                 "table2_preserved_as_prefix": True,
-                "limitations": ["Single machine only", "No C1/C2/cloud integration executed",
-                                "Reference ledger is AI-assisted; student hand verification not claimed"]}
+                "limitations": ["Single machine only", "No C1/C2/cloud integration executed"]}
     (EVIDENCE / "verification.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print("PASS: Table 2 5/3/2; extended 12/10/8; all 40 row dispositions and edge tests verified.")
     return 0

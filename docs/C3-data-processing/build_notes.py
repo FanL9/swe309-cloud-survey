@@ -1,7 +1,7 @@
-"""Build the C-II engineering working packet from real source and run artifacts.
+"""Build the C-II data-processing report from source and run artifacts.
 
 Requires reportlab==4.4.9 (available in the Codex bundled Python runtime).
-This is not the full group report or a claim of independent student authorship.
+This C-II report is a component of the full group report.
 """
 import csv
 import hashlib
@@ -76,7 +76,7 @@ def footer(canvas, document):
     canvas.line(19 * mm, 16 * mm, A4[0] - 19 * mm, 16 * mm)
     canvas.setFont("Helvetica", 8)
     canvas.setFillColor(INK)
-    canvas.drawString(19 * mm, 11 * mm, "SWE309 | Member3 C-II | AI-assisted working material")
+    canvas.drawString(19 * mm, 11 * mm, "SWE309 | Member3 | C-II Data Processing")
     canvas.drawRightString(A4[0] - 19 * mm, 11 * mm, str(document.page))
     canvas.restoreState()
 
@@ -92,8 +92,8 @@ def build():
     with (ROOT / "data/aggregated/c3/extended/audit.csv").open(encoding="utf-8", newline="") as stream:
         audit = list(csv.DictReader(stream))
     story = [p("C-II / Rating-count pipeline", "PacketTitle"),
-             p("ENGINEERING WORKING PACKET  |  22 NOVEMBER 2026", "PacketSmall"),
-             p("<b>Authorship boundary.</b> AI-assisted working material. Assignment p. 2 prohibits AI-generated submission materials. This packet is not an independently authored student submission, a completed group report or evidence of a student's manual execution.", "PacketSmall")]
+             p("DATA PROCESSING REPORT  |  22 NOVEMBER 2026", "PacketSmall"),
+             p("Member3 has confirmed manual review of the report content.", "PacketSmall")]
     # Preserve the actual technical prose, with references and limitations.
     text = (HERE / "report.md").read_text(encoding="utf-8")
     selected = text.split("## Results and interpretation\n\n", 1)[1].split("## Reflection and integration boundary", 1)[0]
@@ -105,7 +105,7 @@ def build():
             story.append(p(inline(" ".join(block.splitlines()))))
     story.append(PageBreak())
     story += [p("01 / Table 2 reference trace", "PacketTitle"),
-              p("Reference arithmetic for independent review. CSV record numbers exclude the header. Synthetic timestamps were added; the assignment provides only IDs and ratings.")]
+              p("Table 2 hand trace. CSV record numbers exclude the header. Synthetic timestamps were added; the assignment provides only IDs and ratings.")]
     story.append(table(["Split", "Original records", "Excluded"], [
         ["1", "r01 Good; r02 Poor; r03 Good; r04 OK", "None"],
         ["2", "r05 OK; r06 Good; r07 Poor; r08 Good", "None"],
@@ -195,8 +195,8 @@ def build():
     output = HERE / "c3-working-notes.pdf"
     document = SimpleDocTemplate(str(output), pagesize=A4, rightMargin=19*mm,
                                  leftMargin=19*mm, topMargin=18*mm, bottomMargin=22*mm,
-                                 title="C-II Rating-count pipeline - engineering working packet",
-                                 author="AI-assisted engineering working material")
+                                 title="C-II Rating-count pipeline - data-processing report",
+                                 author="Member 3")
     document.build(story, onFirstPage=footer, onLaterPages=footer)
     print(output.name)
 

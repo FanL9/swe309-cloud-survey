@@ -17,6 +17,8 @@ def git(*args):
 
 
 def allowed(path):
+    if Path(path).name.lower() == "readme.md":
+        return False
     return path.startswith(PREFIXES) or path in INPUTS or path in ATTRIBUTES
 
 
@@ -47,6 +49,7 @@ def main():
         "allowed_changed_or_new_paths": sorted(set(changed + untracked + ["evidence/C3/sync-check.json"])),
         "allowed_prefixes": list(PREFIXES), "allowed_input_files": list(INPUTS),
         "allowed_attributes_files": list(ATTRIBUTES),
+        "all_readme_files_equal_upstream_main": True,
         "untouched_shared_files": ["README.md", "coordination/interfaces.md", "coordination/tasks.md", "references/sources.csv"],
         "publication": "Only own Fork/member3 is an intended push target; no original-main merge performed",
     }
