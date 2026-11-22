@@ -1,0 +1,84 @@
+{
+  "checked_at_utc": "2026-11-22T07:50:49.859378+00:00",
+  "baseline_upstream_main": "5599dda0b8960465a522b3aba7963bcea428eae0",
+  "live_remote_main": "5599dda0b8960465a522b3aba7963bcea428eae0",
+  "latest_upstream_main_included": true,
+  "sync_method": "fast-forward only from clean member3; prior A3 already merged upstream",
+  "protected_tracked_file_count": 71,
+  "protected_paths_equal_upstream_main": true,
+  "out_of_scope_changes": [],
+  "allowed_changed_or_new_paths": [
+    "data/aggregated/c3/.gitattributes",
+    "data/aggregated/c3/extended/audit.csv",
+    "data/aggregated/c3/extended/cleaned.csv",
+    "data/aggregated/c3/extended/counts.csv",
+    "data/aggregated/c3/extended/execution-plan.txt",
+    "data/aggregated/c3/extended/summary.json",
+    "data/aggregated/c3/table2/audit.csv",
+    "data/aggregated/c3/table2/cleaned.csv",
+    "data/aggregated/c3/table2/counts.csv",
+    "data/aggregated/c3/table2/execution-plan.txt",
+    "data/aggregated/c3/table2/summary.json",
+    "data/synthetic/.gitattributes",
+    "data/synthetic/c3-responses.csv",
+    "data/synthetic/c3-table2.csv",
+    "docs/C3-data-processing/.gitattributes",
+    "docs/C3-data-processing/build_notes.py",
+    "docs/C3-data-processing/c3-working-notes.pdf",
+    "docs/C3-data-processing/hand-trace.md",
+    "docs/C3-data-processing/reference-count.md",
+    "docs/C3-data-processing/report.md",
+    "docs/C3-data-processing/requirements-checklist.md",
+    "docs/C3-data-processing/sources.md",
+    "evidence/C3/.gitattributes",
+    "evidence/C3/run.txt",
+    "evidence/C3/sync-check.json",
+    "evidence/C3/verification.json",
+    "processing/spark/.gitattributes",
+    "processing/spark/check_scope.py",
+    "processing/spark/rating_count.py",
+    "processing/spark/requirements.txt",
+    "processing/spark/verify_c3.py",
+    "references/sources.csv",
+    "tests/processing/.gitattributes",
+    "tests/processing/expected-counts.json",
+    "tests/processing/expected-ledger.csv",
+    "tests/processing/test_rating_count.py"
+  ],
+  "allowed_prefixes": [
+    "docs/C3-data-processing/",
+    "processing/spark/",
+    "tests/processing/",
+    "evidence/C3/",
+    "data/aggregated/c3/"
+  ],
+  "allowed_input_files": [
+    "data/synthetic/c3-table2.csv",
+    "data/synthetic/c3-responses.csv"
+  ],
+  "allowed_attributes_files": [
+    "data/synthetic/.gitattributes"
+  ],
+  "all_readme_files_equal_upstream_main": true,
+  "shared_reference_append_check": {
+    "path": "references/sources.csv",
+    "existing_content_unchanged": true,
+    "appended_C3_rows": 8,
+    "columns": [
+      "module",
+      "title",
+      "url",
+      "version_or_release",
+      "region",
+      "date_checked",
+      "availability",
+      "notes"
+    ]
+  },
+  "untouched_shared_files": [
+    "README.md",
+    "coordination/interfaces.md",
+    "coordination/tasks.md"
+  ],
+  "publication": "Only own Fork/member3 is an intended push target; no original-main merge performed"
+}

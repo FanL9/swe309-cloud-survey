@@ -1,0 +1,78 @@
+== Physical Plan ==
+* HashAggregate (13)
++- Exchange (12)
+   +- * HashAggregate (11)
+      +- * Project (10)
+         +- * Filter (9)
+            +- InMemoryTableScan (1)
+                  +- InMemoryRelation (2)
+                        +- * Project (8)
+                           +- Window (7)
+                              +- * Sort (6)
+                                 +- Exchange (5)
+                                    +- Exchange (4)
+                                       +- LocalTableScan (3)
+
+
+(1) InMemoryTableScan
+Output [2]: [rating#3, status#16]
+Arguments: [rating#3, status#16], [(status#16 = accepted)]
+
+(2) InMemoryRelation
+Arguments: [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10, status#16], CachedRDDBuilder(org.apache.spark.sql.execution.columnar.DefaultCachedBatchSerializer@48f7cdb1,StorageLevel(disk, memory, deserialized, 1 replicas),*(2) Project [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10, CASE WHEN (length(trim(response_id#2, None)) = 0) THEN invalid_id WHEN (id_occurrence#10 > 1) THEN duplicate WHEN rating#3 IN (Good,OK,Poor) THEN accepted ELSE invalid_rating END AS status#16]
++- Window [row_number() windowspecdefinition(response_id#2, source_row#0L ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS id_occurrence#10], [response_id#2], [source_row#0L ASC NULLS FIRST]
+   +- *(1) Sort [response_id#2 ASC NULLS FIRST, source_row#0L ASC NULLS FIRST], false, 0
+      +- Exchange hashpartitioning(response_id#2, 4), ENSURE_REQUIREMENTS, [plan_id=15]
+         +- Exchange RoundRobinPartitioning(4), REPARTITION_BY_NUM, [plan_id=12]
+            +- LocalTableScan [source_row#0L, response_id#2, rating#3, submitted_at#4]
+,None)
+
+(3) LocalTableScan
+Output [4]: [source_row#0L, response_id#2, rating#3, submitted_at#4]
+Arguments: [source_row#0L, response_id#2, rating#3, submitted_at#4]
+
+(4) Exchange
+Input [4]: [source_row#0L, response_id#2, rating#3, submitted_at#4]
+Arguments: RoundRobinPartitioning(4), REPARTITION_BY_NUM, [plan_id=12]
+
+(5) Exchange
+Input [4]: [source_row#0L, response_id#2, rating#3, submitted_at#4]
+Arguments: hashpartitioning(response_id#2, 4), ENSURE_REQUIREMENTS, [plan_id=15]
+
+(6) Sort [codegen id : 1]
+Input [4]: [source_row#0L, response_id#2, rating#3, submitted_at#4]
+Arguments: [response_id#2 ASC NULLS FIRST, source_row#0L ASC NULLS FIRST], false, 0
+
+(7) Window
+Input [4]: [source_row#0L, response_id#2, rating#3, submitted_at#4]
+Arguments: [row_number() windowspecdefinition(response_id#2, source_row#0L ASC NULLS FIRST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS id_occurrence#10], [response_id#2], [source_row#0L ASC NULLS FIRST]
+
+(8) Project [codegen id : 2]
+Output [6]: [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10, CASE WHEN (length(trim(response_id#2, None)) = 0) THEN invalid_id WHEN (id_occurrence#10 > 1) THEN duplicate WHEN rating#3 IN (Good,OK,Poor) THEN accepted ELSE invalid_rating END AS status#16]
+Input [5]: [source_row#0L, response_id#2, rating#3, submitted_at#4, id_occurrence#10]
+
+(9) Filter [codegen id : 1]
+Input [2]: [rating#3, status#16]
+Condition : (status#16 = accepted)
+
+(10) Project [codegen id : 1]
+Output [1]: [rating#3]
+Input [2]: [rating#3, status#16]
+
+(11) HashAggregate [codegen id : 1]
+Input [1]: [rating#3]
+Keys [1]: [rating#3]
+Functions [1]: [partial_count(1)]
+Aggregate Attributes [1]: [count#465L]
+Results [2]: [rating#3, count#466L]
+
+(12) Exchange
+Input [2]: [rating#3, count#466L]
+Arguments: hashpartitioning(rating#3, 4), ENSURE_REQUIREMENTS, [plan_id=111]
+
+(13) HashAggregate [codegen id : 2]
+Input [2]: [rating#3, count#466L]
+Keys [1]: [rating#3]
+Functions [1]: [count(1)]
+Aggregate Attributes [1]: [count(1)#371L]
+Results [2]: [rating#3, count(1)#371L AS count#372L]

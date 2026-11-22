@@ -1,0 +1,153 @@
+C3 actual execution transcript.
+Local paths and the OS account directory are redacted; no fabricated screenshot.
+
+$ python processing/spark/rating_count.py --input data/synthetic/c3-table2.csv --output-dir data/aggregated/c3/table2
+{
+  "input_name": "c3-table2.csv",
+  "input_rows": 12,
+  "accepted": 10,
+  "duplicate": 1,
+  "invalid_rating": 1,
+  "invalid_id": 0,
+  "counts": {
+    "Good": 5,
+    "OK": 3,
+    "Poor": 2
+  },
+  "runtime": {
+    "spark": "3.5.7",
+    "python": "3.12.10",
+    "java": "17.0.21.1",
+    "os": "Windows",
+    "master": "local[2]",
+    "repartitioned_input": 4,
+    "shuffle_partitions": 4,
+    "adaptive_execution": "false",
+    "region": "local computer; no cloud region"
+  }
+}
+SUCCESS: The process with PID 32752 (child process of PID 33324) has been terminated.
+SUCCESS: The process with PID 33324 (child process of PID 24300) has been terminated.
+SUCCESS: The process with PID 24300 (child process of PID 27748) has been terminated.
+The system cannot find the path specified.
+26/11/22 15:35:42 WARN Shell: Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/22 15:35:42 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+Exit code: 0
+
+$ python processing/spark/rating_count.py --input data/synthetic/c3-responses.csv --output-dir data/aggregated/c3/extended
+{
+  "input_name": "c3-responses.csv",
+  "input_rows": 40,
+  "accepted": 30,
+  "duplicate": 5,
+  "invalid_rating": 5,
+  "invalid_id": 0,
+  "counts": {
+    "Good": 12,
+    "OK": 10,
+    "Poor": 8
+  },
+  "runtime": {
+    "spark": "3.5.7",
+    "python": "3.12.10",
+    "java": "17.0.21.1",
+    "os": "Windows",
+    "master": "local[2]",
+    "repartitioned_input": 4,
+    "shuffle_partitions": 4,
+    "adaptive_execution": "false",
+    "region": "local computer; no cloud region"
+  }
+}
+SUCCESS: The process with PID 20312 (child process of PID 10312) has been terminated.
+SUCCESS: The process with PID 10312 (child process of PID 28948) has been terminated.
+SUCCESS: The process with PID 28948 (child process of PID 36632) has been terminated.
+The system cannot find the path specified.
+26/11/22 15:35:48 WARN Shell: Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/22 15:35:48 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+Exit code: 0
+
+$ python -m unittest discover -s tests/processing -p test_*.py -v
+SUCCESS: The process with PID 20824 (child process of PID 27872) has been terminated.
+SUCCESS: The process with PID 27872 (child process of PID 23624) has been terminated.
+SUCCESS: The process with PID 23624 (child process of PID 32392) has been terminated.
+The system cannot find the path specified.
+26/11/22 15:35:55 WARN Shell: Did not find winutils.exe: java.io.FileNotFoundException: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset. -see https://wiki.apache.org/hadoop/WindowsProblems
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/11/22 15:35:55 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+test_artifacts_are_consistent_and_do_not_change_source (test_rating_count.RatingCountTests.test_artifacts_are_consistent_and_do_not_change_source) ... C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1164, family=2, type=1, proto=0, laddr=('127.0.0.1', 5749), raddr=('127.0.0.1', 5748)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1252, family=2, type=1, proto=0, laddr=('127.0.0.1', 5751), raddr=('127.0.0.1', 5750)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_csv_contract_and_malformed_rows (test_rating_count.RatingCountTests.test_csv_contract_and_malformed_rows) ... ok
+test_empty_export_and_zero_categories (test_rating_count.RatingCountTests.test_empty_export_and_zero_categories) ... C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1196, family=2, type=1, proto=0, laddr=('127.0.0.1', 5753), raddr=('127.0.0.1', 5752)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1200, family=2, type=1, proto=0, laddr=('127.0.0.1', 5755), raddr=('127.0.0.1', 5754)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_exact_ratings_and_missing_ids (test_rating_count.RatingCountTests.test_exact_ratings_and_missing_ids) ... C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1252, family=2, type=1, proto=0, laddr=('127.0.0.1', 5757), raddr=('127.0.0.1', 5756)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1236, family=2, type=1, proto=0, laddr=('127.0.0.1', 5759), raddr=('127.0.0.1', 5758)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_invalid_first_is_not_repaired_by_later_valid_duplicate (test_rating_count.RatingCountTests.test_invalid_first_is_not_repaired_by_later_valid_duplicate) ... C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1204, family=2, type=1, proto=0, laddr=('127.0.0.1', 5761), raddr=('127.0.0.1', 5760)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1212, family=2, type=1, proto=0, laddr=('127.0.0.1', 5763), raddr=('127.0.0.1', 5762)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_parameter_binding_preserves_quotes_unicode_and_sql_text (test_rating_count.RatingCountTests.test_parameter_binding_preserves_quotes_unicode_and_sql_text) ... C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1268, family=2, type=1, proto=0, laddr=('127.0.0.1', 5765), raddr=('127.0.0.1', 5764)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1276, family=2, type=1, proto=0, laddr=('127.0.0.1', 5767), raddr=('127.0.0.1', 5766)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_stable_after_reordering_and_different_partition_counts (test_rating_count.RatingCountTests.test_stable_after_reordering_and_different_partition_counts) ... C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1236, family=2, type=1, proto=0, laddr=('127.0.0.1', 5769), raddr=('127.0.0.1', 5768)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1268, family=2, type=1, proto=0, laddr=('127.0.0.1', 5771), raddr=('127.0.0.1', 5770)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1252, family=2, type=1, proto=0, laddr=('127.0.0.1', 5774), raddr=('127.0.0.1', 5773)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1232, family=2, type=1, proto=0, laddr=('127.0.0.1', 9298), raddr=('127.0.0.1', 9297)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_table2_and_extended_match_reference_and_row_ledger (test_rating_count.RatingCountTests.test_table2_and_extended_match_reference_and_row_ledger) ... C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1292, family=2, type=1, proto=0, laddr=('127.0.0.1', 9300), raddr=('127.0.0.1', 9299)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1296, family=2, type=1, proto=0, laddr=('127.0.0.1', 9302), raddr=('127.0.0.1', 9301)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=892, family=2, type=1, proto=0, laddr=('127.0.0.1', 9304), raddr=('127.0.0.1', 9303)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0\Lib\socket.py:791: ResourceWarning: unclosed <socket.socket fd=1208, family=2, type=1, proto=0, laddr=('127.0.0.1', 9306), raddr=('127.0.0.1', 9305)>
+  self._sock = None
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 8.726s
+
+OK
+
+Exit code: 0
