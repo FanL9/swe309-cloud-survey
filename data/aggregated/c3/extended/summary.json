@@ -1,0 +1,29 @@
+{
+  "input_rows": 40,
+  "accepted": 30,
+  "duplicate": 5,
+  "invalid_rating": 5,
+  "invalid_id": 0,
+  "counts": {
+    "Good": 12,
+    "OK": 10,
+    "Poor": 8
+  },
+  "input_sha256": "858b8089e928893d51693af252aa8d2103996cb99e69768cf9fe2bf8b1e213e5",
+  "input_name": "c3-responses.csv",
+  "generated_at_utc": "2026-11-22T07:26:08.984716+00:00",
+  "scope": "whole supplied CSV; no implicit day filter",
+  "deduplication": "first CSV record per exact response_id, before rating validation",
+  "rating_policy": "exact Good, OK, Poor; no trimming or case folding",
+  "runtime": {
+    "spark": "3.5.7",
+    "python": "3.12.10",
+    "java": "17.0.21.1",
+    "os": "Windows",
+    "master": "local[2]",
+    "repartitioned_input": 4,
+    "shuffle_partitions": 4,
+    "adaptive_execution": "false",
+    "region": "local computer; no cloud region"
+  }
+}

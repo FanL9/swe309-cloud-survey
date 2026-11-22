@@ -1,0 +1,13 @@
+source_row,response_id,rating,submitted_at,id_occurrence,status
+1,r01,Good,2026-11-22T09:01:00+08:00,1,accepted
+2,r02,Poor,2026-11-22T09:02:00+08:00,1,accepted
+3,r03,Good,2026-11-22T09:03:00+08:00,1,accepted
+4,r04,OK,2026-11-22T09:04:00+08:00,1,accepted
+5,r05,OK,2026-11-22T09:05:00+08:00,1,accepted
+6,r06,Good,2026-11-22T09:06:00+08:00,1,accepted
+7,r07,Poor,2026-11-22T09:07:00+08:00,1,accepted
+8,r08,Good,2026-11-22T09:08:00+08:00,1,accepted
+9,r09,OK,2026-11-22T09:09:00+08:00,1,accepted
+10,r07,Poor,2026-11-22T09:07:00+08:00,2,duplicate
+11,r10,Good,2026-11-22T09:10:00+08:00,1,accepted
+12,r11,Gd,2026-11-22T09:11:00+08:00,1,invalid_rating
