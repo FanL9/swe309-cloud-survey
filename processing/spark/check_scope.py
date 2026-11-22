@@ -1,5 +1,7 @@
 """Verify that current non-C3 tracked content matches the latest upstream main."""
 from datetime import datetime, timezone
+import csv
+import io
 import json
 import os
 from pathlib import Path
@@ -10,6 +12,7 @@ PREFIXES = ("docs/C3-data-processing/", "processing/spark/", "tests/processing/"
             "evidence/C3/", "data/aggregated/c3/")
 INPUTS = ("data/synthetic/c3-table2.csv", "data/synthetic/c3-responses.csv")
 ATTRIBUTES = ("data/synthetic/.gitattributes",)
+REFERENCE_CSV = "references/sources.csv"
 
 
 def git(*args):
@@ -19,7 +22,29 @@ def git(*args):
 def allowed(path):
     if Path(path).name.lower() == "readme.md":
         return False
-    return path.startswith(PREFIXES) or path in INPUTS or path in ATTRIBUTES
+    return path.startswith(PREFIXES) or path in INPUTS or path in ATTRIBUTES or path == REFERENCE_CSV
+
+
+def check_reference_append(baseline):
+    """Shared register exception: preserve existing content and append C3 rows only."""
+    original = subprocess.check_output(["git", "show", f"{baseline}:{REFERENCE_CSV}"], cwd=ROOT)
+    current = (ROOT / REFERENCE_CSV).read_bytes()
+    original = original.replace(b"\r\n", b"\n")
+    current = current.replace(b"\r\n", b"\n")
+    if not current.startswith(original):
+        raise SystemExit("Existing shared reference content was modified")
+    records = list(csv.reader(io.StringIO(current.decode("utf-8-sig")), strict=True))
+    appended = list(csv.reader(io.StringIO(current[len(original):].decode("utf-8")), strict=True))
+    expected_columns = ["module", "title", "url", "version_or_release", "region", "date_checked", "availability", "notes"]
+    if records[0] != expected_columns or any(len(row) != len(expected_columns) for row in records[1:]):
+        raise SystemExit("Shared reference CSV schema differs from the eight-column register")
+    if any(row[0] != "C3" or any(not cell.strip() for cell in row) for row in appended):
+        raise SystemExit("Only complete C3 reference rows may be appended")
+    keys = [(row[0], row[2]) for row in records[1:]]
+    if len(keys) != len(set(keys)):
+        raise SystemExit("Duplicate module/source URL in the shared reference register")
+    return {"path": REFERENCE_CSV, "existing_content_unchanged": True,
+            "appended_C3_rows": len(appended), "columns": expected_columns}
 
 
 def main():
@@ -35,6 +60,7 @@ def main():
     disallowed = [p for p in changed + untracked if not allowed(p)]
     if disallowed:
         raise SystemExit("Out-of-scope changes: " + ", ".join(disallowed))
+    reference_check = check_reference_append(baseline)
     subprocess.run(["git", "diff", "--check", baseline], cwd=ROOT, check=True)
     protected = [p for p in git("ls-tree", "-r", "--name-only", baseline).splitlines() if not allowed(p)]
     result = {
@@ -50,7 +76,8 @@ def main():
         "allowed_prefixes": list(PREFIXES), "allowed_input_files": list(INPUTS),
         "allowed_attributes_files": list(ATTRIBUTES),
         "all_readme_files_equal_upstream_main": True,
-        "untouched_shared_files": ["README.md", "coordination/interfaces.md", "coordination/tasks.md", "references/sources.csv"],
+        "shared_reference_append_check": reference_check,
+        "untouched_shared_files": ["README.md", "coordination/interfaces.md", "coordination/tasks.md"],
         "publication": "Only own Fork/member3 is an intended push target; no original-main merge performed",
     }
     path = ROOT / "evidence/C3/sync-check.json"

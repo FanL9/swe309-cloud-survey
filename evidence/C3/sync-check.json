@@ -1,10 +1,10 @@
 {
-  "checked_at_utc": "2026-11-22T07:37:45.895689+00:00",
+  "checked_at_utc": "2026-11-22T07:50:49.859378+00:00",
   "baseline_upstream_main": "5599dda0b8960465a522b3aba7963bcea428eae0",
   "live_remote_main": "5599dda0b8960465a522b3aba7963bcea428eae0",
   "latest_upstream_main_included": true,
   "sync_method": "fast-forward only from clean member3; prior A3 already merged upstream",
-  "protected_tracked_file_count": 72,
+  "protected_tracked_file_count": 71,
   "protected_paths_equal_upstream_main": true,
   "out_of_scope_changes": [],
   "allowed_changed_or_new_paths": [
@@ -39,6 +39,7 @@
     "processing/spark/rating_count.py",
     "processing/spark/requirements.txt",
     "processing/spark/verify_c3.py",
+    "references/sources.csv",
     "tests/processing/.gitattributes",
     "tests/processing/expected-counts.json",
     "tests/processing/expected-ledger.csv",
@@ -59,11 +60,25 @@
     "data/synthetic/.gitattributes"
   ],
   "all_readme_files_equal_upstream_main": true,
+  "shared_reference_append_check": {
+    "path": "references/sources.csv",
+    "existing_content_unchanged": true,
+    "appended_C3_rows": 8,
+    "columns": [
+      "module",
+      "title",
+      "url",
+      "version_or_release",
+      "region",
+      "date_checked",
+      "availability",
+      "notes"
+    ]
+  },
   "untouched_shared_files": [
     "README.md",
     "coordination/interfaces.md",
-    "coordination/tasks.md",
-    "references/sources.csv"
+    "coordination/tasks.md"
   ],
   "publication": "Only own Fork/member3 is an intended push target; no original-main merge performed"
 }

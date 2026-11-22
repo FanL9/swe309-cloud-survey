@@ -1,7 +1,8 @@
 # C3 official source register
 
-Checked 22 November 2026. References are scoped to C3; the shared source register
-and all existing Member1/Member2/Member3 A3 references are unchanged. PySpark 3.5.7
+Checked 22 November 2026. References [1]-[8] are also recorded under module `C3`
+in [the shared source register](../../references/sources.csv), using its existing
+eight-column schema. All earlier A2/B2/A3 entries are preserved. PySpark 3.5.7
 is a pinned published release used in this experiment, not a claim of the newest release.
 Region: local Windows computer, no managed cloud service or preview capability used.
 
