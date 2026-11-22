@@ -1,7 +1,5 @@
 # C-II: data processing
 
-Member3 has confirmed manual review of the report content.
-
 ## Results and interpretation
 
 The Table 2 reference trace excludes the second r07 and the illegal rating Gd.

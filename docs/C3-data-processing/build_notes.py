@@ -92,8 +92,7 @@ def build():
     with (ROOT / "data/aggregated/c3/extended/audit.csv").open(encoding="utf-8", newline="") as stream:
         audit = list(csv.DictReader(stream))
     story = [p("C-II / Rating-count pipeline", "PacketTitle"),
-             p("DATA PROCESSING REPORT  |  22 NOVEMBER 2026", "PacketSmall"),
-             p("Member3 has confirmed manual review of the report content.", "PacketSmall")]
+             p("DATA PROCESSING REPORT  |  22 NOVEMBER 2026", "PacketSmall")]
     # Preserve the actual technical prose, with references and limitations.
     text = (HERE / "report.md").read_text(encoding="utf-8")
     selected = text.split("## Results and interpretation\n\n", 1)[1].split("## Reflection and integration boundary", 1)[0]
