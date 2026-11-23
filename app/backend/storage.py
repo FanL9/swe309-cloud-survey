@@ -11,6 +11,8 @@ import sqlite3
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from .validation import RATINGS
+
 # Malaysia has no daylight saving, so a fixed offset is exact and avoids
 # depending on tzdata being installed (it is not on Windows by default).
 MYT = timezone(timedelta(hours=8), "MYT")
@@ -56,9 +58,12 @@ class SQLiteResponseStore:
             conn.execute(f"PRAGMA user_version = {SCHEMA_VERSION}")
         conn.close()
 
-    def add(self, rating, comment=None):
-        """Insert one response and return it as a dict."""
-        submitted = now_myt()
+    def add(self, rating, comment=None, submitted=None):
+        """Insert one response and return it as a dict.
+
+        `submitted` is only for seeding demo data; real submissions use now.
+        """
+        submitted = submitted or now_myt()
         conn = self._connect()
         try:
             for _ in range(5):  # retry on the (very unlikely) ID collision
@@ -140,6 +145,52 @@ class SQLiteResponseStore:
             return [dict(r) for r in rows], total
         finally:
             conn.close()
+
+    def rating_counts(self, date_from=None, date_to=None):
+        """{'Good': n, 'OK': n, 'Poor': n} for an optional inclusive date range."""
+        where, params = [], []
+        if date_from:
+            where.append("substr(submitted_at, 1, 10) >= ?")
+            params.append(date_from)
+        if date_to:
+            where.append("substr(submitted_at, 1, 10) <= ?")
+            params.append(date_to)
+        clause = (" WHERE " + " AND ".join(where)) if where else ""
+        conn = self._connect()
+        try:
+            rows = conn.execute(
+                f"SELECT rating, COUNT(*) AS n FROM responses{clause} GROUP BY rating", params
+            ).fetchall()
+        finally:
+            conn.close()
+        counts = {r: 0 for r in RATINGS}
+        counts.update({row["rating"]: row["n"] for row in rows})
+        return counts
+
+    def daily_counts(self, date_from, date_to):
+        """One entry per day in [date_from, date_to] (dates), zero-filled."""
+        conn = self._connect()
+        try:
+            rows = conn.execute(
+                "SELECT substr(submitted_at, 1, 10) AS day, rating, COUNT(*) AS n FROM responses"
+                " WHERE substr(submitted_at, 1, 10) BETWEEN ? AND ?"
+                " GROUP BY day, rating",
+                (date_from.isoformat(), date_to.isoformat()),
+            ).fetchall()
+        finally:
+            conn.close()
+        found = {}
+        for row in rows:
+            found.setdefault(row["day"], {})[row["rating"]] = row["n"]
+        days = []
+        day = date_from
+        while day <= date_to:
+            key = day.isoformat()
+            entry = {"day": key, **{r: found.get(key, {}).get(r, 0) for r in RATINGS}}
+            entry["total"] = sum(entry[r] for r in RATINGS)
+            days.append(entry)
+            day += timedelta(days=1)
+        return days
 
     def count(self):
         conn = self._connect()

@@ -190,6 +190,28 @@ a:hover { color: var(--brand-hover); }
 .rating-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 .response-id { letter-spacing: 0.06em; word-break: break-all; color: var(--brand); }
 
+/* --- Dashboard and report ----------------------------------------------------------- */
+.stat-value { color: var(--ink); font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+.text-good { color: var(--good-text) !important; }
+.text-poor { color: var(--poor-text) !important; }
+.chart-box { position: relative; height: 300px; }
+.chart-box-sm { height: 190px; }
+.mix-bar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; background: var(--line); }
+.mix-bar span { display: block; height: 100%; }
+.row-current td { background: var(--brand-soft); }
+.print-only { display: none; }
+
+@media print {
+  .sidenav, .navbar-main, .no-print { display: none !important; }
+  .main-content { margin-left: 0 !important; }
+  .print-only { display: block; }
+  body { background: #fff; }
+  .card { break-inside: avoid; }
+  .mix-bar span, .rating-dot, .badge-rating, .row-current td {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+}
+
 /* --- Small helpers ------------------------------------------------------------------ */
 .stat-label { color: var(--text-soft); font-size: 0.8rem; font-weight: 600; }
 .empty-state { padding: 3rem 1rem; text-align: center; color: var(--text-soft); }

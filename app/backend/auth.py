@@ -108,4 +108,4 @@ def safe_next(target):
     """Only allow redirects back into the staff area (no open redirects)."""
     if target and target.startswith("/staff") and not target.startswith("//"):
         return target
-    return url_for("staff.responses")
+    return url_for("staff.dashboard")

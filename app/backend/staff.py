@@ -6,7 +6,7 @@ is written to the log with the staff username, as an access audit trail.
 
 import logging
 import math
-from datetime import date
+from datetime import date, timedelta
 
 from flask import (
     Blueprint,
@@ -23,6 +23,7 @@ from flask import (
 from .auth import check_login, current_staff, login_required, safe_next, verify_csrf
 from .export import export_text
 from .logging_setup import LOGGER_NAME
+from .reports import load_c3_batch, percentages, resolve_c3_path
 from .storage import now_myt
 from .validation import RATINGS
 
@@ -30,6 +31,7 @@ bp = Blueprint("staff", __name__, url_prefix="/staff")
 log = logging.getLogger(LOGGER_NAME)
 
 PAGE_SIZE = 20
+TREND_DAYS = 14
 
 
 def _store():
@@ -54,7 +56,7 @@ def _parse_date(value, label, errors):
 def login():
     enabled = bool(current_app.config["STAFF_ACCOUNT_USERNAME"])
     if current_staff():
-        return redirect(url_for("staff.responses"))
+        return redirect(url_for("staff.dashboard"))
     if request.method == "GET":
         return render_template("staff/login.html", enabled=enabled,
                                next=request.args.get("next", ""))
@@ -96,8 +98,52 @@ def logout():
 
 @bp.get("/")
 @login_required
-def home():
-    return redirect(url_for("staff.responses"))
+def dashboard():
+    store = _store()
+    today = now_myt().date()
+    yesterday = today - timedelta(days=1)
+    all_counts = store.rating_counts()
+    total = sum(all_counts.values())
+    today_total = sum(store.rating_counts(today.isoformat(), today.isoformat()).values())
+    yesterday_total = sum(store.rating_counts(yesterday.isoformat(), yesterday.isoformat()).values())
+    days = store.daily_counts(today - timedelta(days=TREND_DAYS - 1), today)
+    return render_template(
+        "staff/dashboard.html",
+        total=total, counts=all_counts, pct=percentages(all_counts),
+        today_total=today_total, yesterday_total=yesterday_total,
+        days=days, trend_days=TREND_DAYS, ratings=RATINGS,
+        chart_data={
+            "labels": [d["day"][5:] for d in days],
+            "series": {r: [d[r] for d in days] for r in RATINGS},
+            "distribution": [all_counts[r] for r in RATINGS],
+        },
+    )
+
+
+@bp.get("/report")
+@login_required
+def report():
+    errors = []
+    today = now_myt().date()
+    day_text = _parse_date(request.args.get("date", ""), "Date", errors) or today.isoformat()
+    day = date.fromisoformat(day_text)
+    prev = day - timedelta(days=1)
+    store = _store()
+    counts = store.rating_counts(day_text, day_text)
+    prev_counts = store.rating_counts(prev.isoformat(), prev.isoformat())
+    week = store.daily_counts(day - timedelta(days=6), day)
+    batch = load_c3_batch(resolve_c3_path(current_app.config))
+    log.info("staff viewed report user=%s date=%s", current_staff(), day_text)
+    return render_template(
+        "staff/report.html",
+        day=day_text, prev_day=prev.isoformat(), next_day=(day + timedelta(days=1)).isoformat(),
+        is_today=day >= today, errors=errors, ratings=RATINGS,
+        counts=counts, total=sum(counts.values()), pct=percentages(counts),
+        prev_counts=prev_counts, prev_total=sum(prev_counts.values()),
+        week=week, batch=batch,
+        batch_pct=percentages(batch["counts"]) if "counts" in batch else None,
+        generated_at=now_myt(),
+    )
 
 
 @bp.get("/responses")

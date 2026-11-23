@@ -14,7 +14,7 @@ CSV 字段（已按 C3 现有数据对齐）：`response_id,rating,submitted_at`
 
 约定聚合文件字段、文件格式、存放路径、统计日期、更新时间和无效/重复记录的计数方式。看板区分原始实时数据和批处理结果。
 
-C1 报告页暂定读取 `rating,count` 格式的 CSV（即 C3 现有 `counts.csv`），路径由环境变量 `C3_COUNTS_PATH` 指定。
+C1 每日报告页已接入：读取 `rating,count` 格式的 CSV（即 C3 现有 `counts.csv`），路径由环境变量 `C3_COUNTS_PATH` 指定；同目录若有 `summary.json`，显示其中的 `input_rows`、`accepted`、`duplicate`、`invalid_rating` 和 `generated_at_utc`。本地开发未设置时默认读取 `data/aggregated/c3/extended/counts.csv`。页面标注为“批处理结果，非实时数据”。若 C3 更改文件名或字段，请同步告知。
 
 ## C1 → C2
 
@@ -45,7 +45,7 @@ C1 报告页暂定读取 `rating,count` 格式的 CSV（即 C3 现有 `counts.cs
 | `STAFF_USERNAME` | 空 | 员工后台用户名；生产环境未设置则后台不可用 | 现在 |
 | `STAFF_PASSWORD_HASH` | 空 | 员工密码的哈希值（不存明文），在 `app/` 下运行 `python hash_password.py` 生成；放在密钥管理服务里 | 现在 |
 | `STORAGE_BACKEND` | `sqlite` | 存储后端；`firestore` 为预留值，尚未实现 | 若改用 Firestore |
-| `C3_COUNTS_PATH` | 空 | C3 聚合结果 CSV 路径 | 第 5 步 |
+| `C3_COUNTS_PATH` | 空（开发环境默认读取仓库中的 C3 结果） | C3 聚合结果 CSV 路径；云上未设置时报告页显示“未配置” | 可选 |
 
 ### 已知限制（需 C2 决定）
 

@@ -49,7 +49,7 @@ def test_login_success_and_redirect_to_next(client):
 
 def test_login_rejects_open_redirect(client):
     resp = _login(client, next_url="https://evil.example/")
-    assert resp.headers["Location"].endswith("/staff/responses")
+    assert resp.headers["Location"].endswith("/staff/")
 
 
 def test_wrong_password_rejected(client):
