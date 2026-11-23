@@ -15,7 +15,7 @@
 | C1-7 | `c1-07-dashboard.jpg` | Fig. C1-7. Staff dashboard with live metrics and charts (synthetic data). | 增强功能 |
 | C1-8 | `c1-08-daily-report.jpg` | Fig. C1-8. Daily report for management, with the C-II batch result shown separately. | 增强功能 |
 | C1-9 | `c1-09-filter-poor.jpg` | Fig. C1-9. Staff response list filtered to Poor ratings. | 增强功能 |
-| C1-10 | （待补） | Fig. C1-10. The exported CSV stored in XMDrive. | CSV 已上传 XMDrive |
+| C1-10 | `c1-10-xmdrive-upload.png` | Fig. C1-10. The exported CSV stored in the author's XMDrive personal space (178 B, same size as the local file; the uploader's name is masked). | CSV 已上传 XMDrive |
 
 截图来自浏览器预览，宽度 800 像素。报告里需要更清晰的图，可以按同样步骤用 Win+Shift+S 重新截取。
 
@@ -32,11 +32,12 @@
 
 日志说明（可直接用在报告里）：*The log shows each request with its status code, the accepted submissions with their response IDs, the rejected values with the reason `invalid_rating`, and the restart line reporting three stored responses.*
 
-## 还需要成员本人补充
+## 可选补充
 
-1. **图 C1-10：XMDrive 上传截图**。用学校账号登录 box.xmu.edu.my，上传 `data/exports/c1-responses-20261123.csv`，截取能看到文件名的页面，保存为 `c1-10-xmdrive-upload.png`。截图里不要露出学号以外的个人信息。
-2. **（可选）代码结构截图**。作业要求"程序运行加源代码结构"，可以在 VS Code 里展开 `app/` 文件夹，和运行中的页面并排截一张图。`source-structure.txt` 可作为补充。
-3. **（可选）终端截图**。如果希望数据库和日志也用截图展示，在 `app/` 下运行下面的命令，再截终端：
+XMDrive 上传已完成（图 C1-10，2026-11-23 上传到个人空间，修改人姓名已遮挡）。
+
+1. **（可选）代码结构截图**。作业要求"程序运行加源代码结构"，可以在 VS Code 里展开 `app/` 文件夹，和运行中的页面并排截一张图。`source-structure.txt` 可作为补充。
+2. **（可选）终端截图**。如果希望数据库和日志也用截图展示，在 `app/` 下运行下面的命令，再截终端：
 
 ```powershell
 .venv\Scripts\python -c "import sqlite3; [print(r) for r in sqlite3.connect('instance/evidence-run/survey.db').execute('SELECT * FROM responses')]"
