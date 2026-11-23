@@ -1,0 +1,87 @@
+{% extends "staff/layout.html" %}
+{% from "partials/macros.html" import icon %}
+{% set active = "dashboard" %}
+{% block title %}Dashboard{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block subheading %}Live data from the response store{% endblock %}
+{% block content %}
+{% set diff = today_total - yesterday_total %}
+
+<div class="bento bento-dash">
+
+  <section class="tile tile-solid tone-brand a-hero">
+    <div class="tile-head">
+      <p class="stat-label mb-0">Total responses</p>
+      <span class="stat-icon">{{ icon("inbox", "") }}</span>
+    </div>
+    <p class="mega mt-3 mb-1">{{ "{:,}".format(total) }}</p>
+    <p class="stat-sub mb-4">responses collected, all time</p>
+    <div class="tile-foot mini-stats">
+      {% for r in ratings %}
+      <div><strong>{{ counts[r] }}</strong><span>{{ r }} · {{ pct[r] }}%</span></div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="tile tile-solid tone-ink a-today">
+    <div class="tile-head">
+      <p class="stat-label mb-0">Today</p>
+      <span class="stat-icon">{{ icon("calendar", "") }}</span>
+    </div>
+    <p class="big mt-2 mb-1">{{ today_total }}</p>
+    <p class="small stat-sub mb-0">{{ "+" if diff > 0 else "" }}{{ diff }} vs yesterday ({{ yesterday_total }})</p>
+  </section>
+
+  <section class="tile a-good">
+    <div class="tile-head">
+      <p class="stat-label mb-0">Good rate</p>
+      <span class="stat-icon">{{ icon("up", "") }}</span>
+    </div>
+    <p class="big mt-2 mb-2" style="color: var(--good-text)">{{ pct.Good }}%</p>
+    <div class="meter mb-2"><span style="width: {{ pct.Good }}%; background: var(--good)"></span></div>
+    <p class="small text-secondary mb-0">{{ counts.Good }} of {{ total }}</p>
+  </section>
+
+  <section class="tile a-dist">
+    <h2 class="h6 fw-bold mb-0">Rating distribution</h2>
+    <p class="small text-secondary mb-2">All time</p>
+    <div class="chart-box chart-box-sm my-auto">
+      <canvas id="dist-chart" aria-label="Rating distribution"></canvas>
+      <div class="chart-center"><strong>{{ "{:,}".format(total) }}</strong><span>responses</span></div>
+    </div>
+    <ul class="list-unstyled mb-0 mt-3">
+      {% for r in ratings %}
+      <li class="d-flex align-items-center justify-content-between py-2 {% if not loop.last %}border-bottom{% endif %}" style="border-color: var(--line) !important">
+        <span class="d-flex align-items-center"><span class="rating-dot me-2" style="background: var(--{{ r | lower }})"></span>{{ r }}</span>
+        <span><strong style="color: var(--ink)">{{ counts[r] }}</strong> <span class="text-secondary small ms-1">{{ pct[r] }}%</span></span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="tile a-trend">
+    <h2 class="h6 fw-bold mb-0">Daily responses</h2>
+    <p class="small text-secondary mb-2">Last {{ trend_days }} days, by rating</p>
+    <div class="chart-box"><canvas id="trend-chart" aria-label="Daily responses by rating"></canvas></div>
+  </section>
+
+  <section class="tile tile-solid tone-poor a-poor">
+    <div class="tile-head">
+      <p class="stat-label mb-0">Poor rate</p>
+      <span class="stat-icon">{{ icon("down", "") }}</span>
+    </div>
+    <div class="tile-foot">
+      <p class="mega mb-1">{{ pct.Poor }}<span class="fs-3">%</span></p>
+      <p class="stat-sub mb-0">{{ counts.Poor }} of {{ total }} responses need follow-up</p>
+    </div>
+  </section>
+
+</div>
+
+<script type="application/json" id="chart-data">{{ chart_data | tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

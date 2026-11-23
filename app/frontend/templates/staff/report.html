@@ -1,0 +1,123 @@
+{% extends "staff/layout.html" %}
+{% from "partials/macros.html" import rating_badge, icon %}
+{% set active = "report" %}
+{% block title %}Daily report {{ day }}{% endblock %}
+{% block heading %}Daily rating report{% endblock %}
+{% block subheading %}For management · {{ day }}{% endblock %}
+{% block content %}
+
+<div class="d-flex flex-wrap align-items-center gap-2 mb-4 no-print">
+  <a class="btn btn-light mb-0" href="{{ url_for('staff.report', date=prev_day) }}">&larr; {{ prev_day }}</a>
+  <form method="get" action="{{ url_for('staff.report') }}" class="d-flex gap-2">
+    <input class="form-control" type="date" name="date" value="{{ day }}" aria-label="Report date">
+    <button class="btn btn-primary mb-0" type="submit">Show</button>
+  </form>
+  {% if not is_today %}
+  <a class="btn btn-light mb-0" href="{{ url_for('staff.report', date=next_day) }}">{{ next_day }} &rarr;</a>
+  {% endif %}
+  <button class="btn btn-light mb-0 ms-auto d-flex align-items-center" type="button" onclick="window.print()">{{ icon("print", "nav-icon me-2") }}Print</button>
+</div>
+{% for e in errors %}<div class="text-danger small mb-3">{{ e }}</div>{% endfor %}
+
+<div class="print-only mb-3">
+  <h1 class="h4 fw-bold mb-0">Company A · Daily rating report · {{ day }}</h1>
+  <p class="small text-secondary">Generated {{ generated_at.strftime("%Y-%m-%d %H:%M") }} MYT</p>
+</div>
+
+{% set rating_icons = {"Good": "up", "OK": "mid", "Poor": "down"} %}
+<div class="bento bento-report mb-4">
+
+  <section class="tile tile-solid tone-ink a-hero">
+    <div class="tile-head">
+      <p class="stat-label mb-0">Responses</p>
+      <span class="stat-icon">{{ icon("inbox", "") }}</span>
+    </div>
+    <div class="tile-foot">
+      <p class="mega mb-1">{{ total }}</p>
+      {% set d = total - prev_total %}
+      <p class="stat-sub mb-0">{{ "+" if d > 0 else "" }}{{ d }} vs {{ prev_day }}</p>
+    </div>
+  </section>
+
+  {% for r in ratings %}
+  <section class="tile tile-solid tone-{{ r | lower }} a-{{ r | lower }}">
+    <div class="tile-head">
+      <p class="stat-label mb-0">{{ r }}</p>
+      <span class="stat-icon">{{ icon(rating_icons[r], "") }}</span>
+    </div>
+    <p class="big mt-2 mb-1">{{ counts[r] }} <span class="fs-5 fw-bold">{{ pct[r] }}%</span></p>
+    {% set d = counts[r] - prev_counts[r] %}
+    <p class="small stat-sub mb-0">{{ "+" if d > 0 else "" }}{{ d }} vs previous day</p>
+  </section>
+  {% endfor %}
+
+  <section class="tile a-mix">
+    <p class="stat-label mb-2">Rating mix</p>
+    {% if total %}
+    <div class="mix-bar mt-auto" role="img" aria-label="Good {{ pct.Good }}%, OK {{ pct.OK }}%, Poor {{ pct.Poor }}%">
+      {% for r in ratings %}{% if counts[r] %}<span style="width: {{ pct[r] }}%; background: var(--{{ r | lower }})"></span>{% endif %}{% endfor %}
+    </div>
+    <div class="d-flex justify-content-between small text-secondary mt-2">
+      {% for r in ratings %}<span><span class="rating-dot me-1" style="background: var(--{{ r | lower }}); width: 8px; height: 8px"></span>{{ r }}</span>{% endfor %}
+    </div>
+    {% else %}
+    <p class="text-secondary mb-0 mt-auto">No responses on this day.</p>
+    {% endif %}
+  </section>
+</div>
+
+<div class="row g-3">
+  <div class="col-12 col-xl-7">
+    <div class="card h-100">
+      <div class="card-header px-4 pt-4 pb-0">
+        <h2 class="h6 fw-bold mb-0">Last 7 days</h2>
+        <p class="small text-secondary mb-0">Live data, up to {{ day }}</p>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center mb-0">
+          <thead><tr><th class="ps-4">Date</th>{% for r in ratings %}<th class="text-end">{{ r }}</th>{% endfor %}<th class="text-end pe-4">Total</th></tr></thead>
+          <tbody>
+            {% for w in week | reverse %}
+            <tr {% if w.day == day %}class="row-current"{% endif %}>
+              <td class="ps-4 text-sm">{{ w.day }}</td>
+              {% for r in ratings %}<td class="text-end text-sm">{{ w[r] }}</td>{% endfor %}
+              <td class="text-end pe-4 text-sm fw-bold" style="color: var(--ink)">{{ w.total }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-xl-5">
+    <div class="card h-100">
+      <div class="card-header px-4 pt-4 pb-0">
+        <h2 class="h6 fw-bold mb-0">Batch result (C3, PySpark)</h2>
+        <p class="small text-secondary mb-0">Cleaned rating count from the exported CSV, not live data</p>
+      </div>
+      <div class="card-body px-4 pb-4">
+        {% if batch.error %}
+        <div class="empty-state py-4">{{ batch.error }}</div>
+        {% else %}
+        <ul class="list-unstyled mb-3">
+          {% for r in ratings %}
+          <li class="d-flex justify-content-between py-2 border-bottom" style="border-color: var(--line) !important">
+            {{ rating_badge(r) }}
+            <span><strong style="color: var(--ink)">{{ batch.counts[r] }}</strong> <span class="small text-secondary ms-1">{{ batch_pct[r] }}%</span></span>
+          </li>
+          {% endfor %}
+          <li class="d-flex justify-content-between py-2"><span class="fw-semibold">Valid total</span><strong style="color: var(--ink)">{{ batch.total }}</strong></li>
+        </ul>
+        {% if batch.cleaning %}
+        <p class="small text-secondary mb-1">
+          {{ batch.cleaning.input_rows }} input rows → {{ batch.cleaning.accepted }} accepted,
+          {{ batch.cleaning.duplicate }} duplicates and {{ batch.cleaning.invalid_rating }} invalid ratings removed.
+        </p>
+        {% endif %}
+        <p class="small text-secondary mb-0">Source: <span class="mono">{{ batch.file }}</span> · generated {{ batch.generated_at.strftime("%Y-%m-%d %H:%M") }} MYT</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

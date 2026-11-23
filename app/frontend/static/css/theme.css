@@ -1,33 +1,33 @@
 /* Company A survey theme.
  *
  * Loaded after the Soft UI Dashboard stylesheet. Design rules:
- *   - one accent colour (orange) on a white / near-white base
- *   - flat, saturated solid colours only: no gradients
+ *   - pure white base; large blocks of bold, fully saturated colour on it
+ *   - flat solid colours only: no gradients, no tints
+ *   - every data colour as loud as the orange brand
  *   - light borders instead of heavy shadows; minimal decoration
  */
 
 :root {
-  --brand: #ea580c;          /* orange-600: buttons, active nav, links */
-  --brand-hover: #c2410c;    /* orange-700 */
-  --brand-soft: #fff1e6;     /* tinted background for active / hover */
-  /* Rating colours: soft tinted pill + dark text + coloured dot.
-     OK is neutral slate on purpose: it means "neither good nor bad",
-     and keeps orange as the only warm accent on the page. */
-  --good: #10b981;           /* dot: emerald-500 */
-  --good-text: #047857;      /* emerald-700 */
-  --good-bg: #d1fae5;        /* emerald-100 */
-  --ok: #94a3b8;             /* dot: slate-400 */
-  --ok-text: #475569;        /* slate-600 */
-  --ok-bg: #f1f5f9;          /* slate-100 */
-  --poor: #f43f5e;           /* dot: rose-500 */
-  --poor-text: #be123c;      /* rose-700 */
-  --poor-bg: #ffe4e6;        /* rose-100 */
+  --brand: #ea580c;          /* orange: buttons, active nav, links, hero card */
+  --brand-hover: #c2410c;
+  --brand-soft: #fff1e6;     /* only for selected / hover backgrounds */
+  /* Rating palette: no traffic lights. A warm family built on the brand
+     orange (orange -> sunflower) against one cool electric violet, plus a
+     violet-black ink. Orange and violet are near-complementary, so they
+     clash hard on white while still feeling like one system. */
+  --good: #ff6b1a;           /* bright orange */
+  --ok: #ffc21a;             /* sunflower yellow */
+  --ok-ink: #3d2c00;         /* text on yellow */
+  --poor: #6b3cff;           /* electric violet */
+  --good-text: #e85d0c;
+  --ok-text: #b07d00;
+  --poor-text: #5a2ee6;
   --muted: #9ca3af;          /* gray-400 */
-  --ink: #111827;            /* gray-900: headings */
+  --ink: #17132e;            /* violet-black: headings, the dark block */
   --text: #374151;           /* gray-700: body text */
   --text-soft: #6b7280;      /* gray-500: secondary text */
-  --line: #e5e7eb;           /* gray-200: borders */
-  --page: #f7f7f8;           /* page background behind white cards */
+  --line: #ececec;           /* borders */
+  --page: #ffffff;           /* pure white, so colour blocks pop */
 
   --bs-primary: var(--brand);
   --bs-primary-rgb: 234, 88, 12;
@@ -131,12 +131,12 @@ a:hover { color: var(--brand-hover); }
   background: currentColor;
   flex: none;
 }
-.badge-good { background-color: var(--good-bg) !important; color: var(--good-text); }
-.badge-good::before { background: var(--good); }
-.badge-ok   { background-color: var(--ok-bg) !important; color: var(--ok-text); }
-.badge-ok::before { background: var(--ok); }
-.badge-poor { background-color: var(--poor-bg) !important; color: var(--poor-text); }
-.badge-poor::before { background: var(--poor); }
+/* Solid fill, white text and dot: same treatment as the orange buttons. */
+.badge-good { background-color: var(--good) !important; color: #fff; }
+.badge-ok   { background-color: var(--ok) !important; color: var(--ok-ink); }
+.badge-ok::before { background: var(--ok-ink) !important; opacity: 0.8; }
+.badge-poor { background-color: var(--poor) !important; color: #fff; }
+.badge-rating::before { background: rgba(255, 255, 255, 0.9); }
 .progress { background-color: var(--line); box-shadow: none; height: 8px; border-radius: 999px; }
 .progress-bar { background-image: none !important; box-shadow: none; border-radius: 999px; }
 
@@ -189,6 +189,138 @@ a:hover { color: var(--brand-hover); }
 .btn-check:focus-visible + .btn { box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.25) !important; }
 .rating-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 .response-id { letter-spacing: 0.06em; word-break: break-all; color: var(--brand); }
+
+/* --- Dashboard and report ----------------------------------------------------------- */
+.stat-value { color: var(--ink); font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+
+/* Solid colour icon tiles on the metric cards */
+.stat-icon {
+  width: 2.75rem; height: 2.75rem; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 0.75rem; color: #fff;
+}
+.stat-icon svg { width: 22px; height: 22px; }
+.tile-brand { background: var(--brand); }
+.tile-good { background: var(--good); }
+.tile-ok { background: var(--ok); }
+.tile-poor { background: var(--poor); }
+
+/* Metric cards as full blocks of colour on the white page */
+.card-solid { border: 0; color: #fff; }
+.card-solid .stat-label, .card-solid .stat-value, .card-solid p,
+.card-solid .stat-value span { color: #fff !important; }
+.card-solid .stat-sub { color: rgba(255, 255, 255, 0.88) !important; }
+.card-solid .stat-icon { background: rgba(255, 255, 255, 0.2); }
+.tone-brand { background: var(--brand); }
+.tone-ink { background: var(--ink); }
+.tone-good { background: var(--good); }
+.tone-ok { background: var(--ok); }
+.tone-poor { background: var(--poor); }
+.tone-ink .stat-icon { background: var(--brand); }
+.tone-ok, .tone-ok .stat-label, .tone-ok .stat-value, .tone-ok p,
+.tone-ok .stat-value span { color: var(--ok-ink) !important; }
+.tone-ok .stat-sub { color: rgba(61, 44, 0, 0.8) !important; }
+.tone-ok .stat-icon { background: rgba(61, 44, 0, 0.12); }
+
+/* --- Bento layout: tiles of different sizes that interlock ---------------- */
+.bento { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.bento-dash {
+  grid-template-areas:
+    "hero  hero  today dist"
+    "hero  hero  good  dist"
+    "trend trend trend poor";
+}
+.bento-report {
+  grid-template-areas:
+    "hero good good ok"
+    "hero mix  poor poor";
+}
+.a-hero { grid-area: hero; } .a-today { grid-area: today; } .a-good { grid-area: good; }
+.a-ok { grid-area: ok; } .a-poor { grid-area: poor; } .a-dist { grid-area: dist; }
+.a-trend { grid-area: trend; } .a-mix { grid-area: mix; }
+
+.tile {
+  position: relative; overflow: hidden;
+  border-radius: 1.25rem; padding: 1.4rem 1.5rem;
+  background: #fff; border: 1px solid var(--line);
+  display: flex; flex-direction: column; min-width: 0;
+}
+.tile-solid { border: 0; color: #fff; }
+.tile.tone-brand { background: var(--brand); }
+.tile.tone-ink { background: var(--ink); }
+.tile.tone-good { background: var(--good); }
+.tile.tone-ok { background: var(--ok); }
+.tile.tone-poor { background: var(--poor); }
+.tile-solid h2, .tile-solid .stat-label, .tile-solid .stat-value, .tile-solid p { color: inherit !important; }
+.tile-solid .stat-sub { opacity: 0.85; }
+/* Flat decorative circles break up the rectangles (no gradients). */
+.tile-solid::after {
+  content: ""; position: absolute; pointer-events: none;
+  width: 15rem; height: 15rem; border-radius: 50%;
+  right: -5rem; bottom: -7rem; background: rgba(255, 255, 255, 0.12);
+}
+.tile-solid::before {
+  content: ""; position: absolute; pointer-events: none;
+  width: 6rem; height: 6rem; border-radius: 50%;
+  right: 1.5rem; top: -2.5rem; border: 2px solid rgba(255, 255, 255, 0.22);
+}
+.tile.tone-ok { color: var(--ok-ink); }
+.tile.tone-ok::after { background: rgba(255, 255, 255, 0.35); }
+.tile.tone-ok::before { border-color: rgba(61, 44, 0, 0.15); }
+.tile > * { position: relative; z-index: 1; }
+
+.tile-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.tile .stat-icon { background: rgba(255, 255, 255, 0.2); }
+.tile:not(.tile-solid) .stat-icon { background: var(--brand); }
+.tile.tone-ink .stat-icon { background: var(--brand); }
+.tile.tone-ok .stat-icon { background: rgba(61, 44, 0, 0.12); color: var(--ok-ink); }
+.mega { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.big { font-size: 2.4rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+.tile-foot { margin-top: auto; }
+.mini-stats { display: flex; gap: 1.75rem; flex-wrap: wrap; }
+.mini-stats div { min-width: 4rem; }
+.mini-stats strong { display: block; font-size: 1.35rem; font-weight: 800; line-height: 1.1; }
+.mini-stats span { font-size: 0.75rem; font-weight: 600; opacity: 0.85; }
+.meter { height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.meter > span { display: block; height: 100%; border-radius: 999px; }
+
+@media (max-width: 1199.98px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bento-dash { grid-template-areas: "hero hero" "today good" "trend trend" "dist poor"; }
+  .bento-report { grid-template-areas: "hero hero" "good ok" "poor poor" "mix mix"; }
+}
+@media (max-width: 575.98px) {
+  .bento { grid-template-columns: minmax(0, 1fr); }
+  .bento-dash { grid-template-areas: "hero" "today" "good" "trend" "dist" "poor"; }
+  .bento-report { grid-template-areas: "hero" "good" "ok" "poor" "mix"; }
+}
+
+/* Total in the middle of the doughnut */
+.chart-center {
+  position: absolute; inset: 0; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.chart-center strong { color: var(--ink); font-size: 1.6rem; line-height: 1.1; }
+.chart-center span { color: var(--text-soft); font-size: 0.75rem; font-weight: 600; }
+.text-good { color: var(--good-text) !important; }
+.text-poor { color: var(--poor-text) !important; }
+.chart-box { position: relative; height: 300px; }
+.chart-box-sm { height: 190px; }
+.mix-bar { display: flex; height: 14px; border-radius: 999px; overflow: hidden; gap: 2px; background: var(--line); }
+.mix-bar span { display: block; height: 100%; }
+.row-current td { background: var(--brand-soft); }
+.print-only { display: none; }
+
+@media print {
+  .sidenav, .navbar-main, .no-print { display: none !important; }
+  .main-content { margin-left: 0 !important; }
+  .print-only { display: block; }
+  body { background: #fff; }
+  .card { break-inside: avoid; }
+  .mix-bar span, .rating-dot, .badge-rating, .row-current td, .card-solid, .stat-icon {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+}
 
 /* --- Small helpers ------------------------------------------------------------------ */
 .stat-label { color: var(--text-soft); font-size: 0.8rem; font-weight: 600; }

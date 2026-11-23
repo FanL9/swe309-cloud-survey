@@ -1,7 +1,6 @@
 # C1 应用代码
 
-负责人：Member 4。Flask 3.1 + SQLite，实现问卷提交、服务端评分校验、持久化、日志和 CSV 导出，以及员工后台（登录、记录列表、筛选、按 ID 查询、CSV 下载）。
-后续：指标卡、评分分布、每日趋势、每日报告。
+负责人：Member 4。Flask 3.1 + SQLite，实现问卷提交、服务端评分校验、持久化、日志和 CSV 导出，以及员工后台（登录、看板、记录列表、筛选、按 ID 查询、每日报告、CSV 下载）。
 
 ## 目录
 
@@ -13,6 +12,7 @@ app/
 │   ├── routes.py       问卷页面、JSON 接口、健康检查
 │   ├── staff.py        员工后台路由
 │   ├── auth.py         员工登录、CSRF、登录失败锁定
+│   ├── reports.py      读取 C3 批处理结果、百分比计算
 │   ├── validation.py   评分校验（只接受 Good / OK / Poor）
 │   ├── storage.py      存储层（当前为 SQLite；以后可加 Firestore）
 │   ├── export.py       CSV 导出
@@ -21,11 +21,14 @@ app/
 │   ├── templates/      页面模板（partials/head.html 统一引入样式；staff/ 为后台页面）
 │   └── static/
 │       ├── css/theme.css  主题样式（橙色、纯色、无渐变）
+│       ├── js/dashboard.js  看板图表
+│       ├── vendor/chart.js/  Chart.js 4.4.5（MIT）
 │       └── vendor/soft-ui-dashboard/  模板编译后的 CSS 及 MIT 许可证
 ├── run.py              本地启动
 ├── wsgi.py             生产服务器入口（gunicorn）
 ├── export_csv.py       导出 CSV 的命令
 ├── hash_password.py    生成员工密码哈希
+├── seed_demo.py        生成演示用合成数据（仅开发环境）
 ├── requirements.txt    运行依赖
 ├── requirements-dev.txt 测试依赖
 ├── Dockerfile          容器镜像（Cloud Run）
@@ -56,6 +59,8 @@ python run.py
 | POST | `/api/responses` | JSON 提交，如 `{"rating": "Good", "comment": "..."}`；成功 201，非法 400 |
 | GET | `/health` | 健康检查；正常 200，存储不可用 503 |
 | GET/POST | `/staff/login` | 员工登录 |
+| GET | `/staff/` | 看板：指标卡、近 14 天每日趋势、评分分布 |
+| GET | `/staff/report?date=` | 每日报告（默认今天），含近 7 天表格和 C3 批处理结果，可打印 |
 | GET | `/staff/responses` | 记录列表，支持 `rating`、`from`、`to`（YYYY-MM-DD）、`q`（ID 片段）、`page` |
 | GET | `/staff/lookup?id=` | 按完整 ID 跳到详情页 |
 | GET | `/staff/responses/<response_id>` | 单条记录详情（客服查询） |
@@ -80,6 +85,18 @@ python hash_password.py
 ```
 
 安全措施：密码只存哈希；会话 Cookie 为 HttpOnly、SameSite=Lax，生产环境仅限 HTTPS；表单带 CSRF 令牌；同一用户名连续失败 5 次锁定 15 分钟；查看单条记录和导出都会在日志里记录员工用户名（访问审计）。
+
+## 看板与每日报告
+
+- **看板**（实时数据）：总回复数、今日回复数（与昨日对比）、Good 率、Poor 率；近 14 天按评分堆叠的柱状图；全部回复的评分分布环形图。
+- **每日报告**（给管理层）：选定日期的回复数和各评分占比（与前一天对比）、评分比例条、近 7 天表格；点 “Print” 可打印或另存为 PDF。
+- **C3 批处理结果**：报告页右侧显示 C3 用 PySpark 清洗后的统计（读取 `C3_COUNTS_PATH` 指向的 `counts.csv`，同目录有 `summary.json` 时一并显示清洗前后的条数）。本地开发未设置时，自动读取仓库里的 `data/aggregated/c3/extended/counts.csv`。页面明确区分实时数据和批处理结果。
+
+演示前想让图表有数据，可以生成两周的合成数据（只在开发环境可用，数据写入本地数据库）：
+
+```powershell
+python seed_demo.py
+```
 
 ## 样式
 
