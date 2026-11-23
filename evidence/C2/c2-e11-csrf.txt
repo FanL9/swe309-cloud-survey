@@ -1,0 +1,7 @@
+$ curl -i -sS -X POST "https://changxuzhu.pythonanywhere.com/staff/login" \
+    -d "username=staff&password=wrongpass&csrf_token=x"
+
+HTTP/1.1 400 BAD REQUEST
+Content-Type: text/html; charset=utf-8
+<title>Error 400 · Company A</title>
+The form expired or was invalid. Please try again.
