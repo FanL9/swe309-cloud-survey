@@ -35,3 +35,5 @@ derby.log
 .DS_Store
 Thumbs.db
 ~$*
+# C1 runtime data (database, exports)
+app/instance/
