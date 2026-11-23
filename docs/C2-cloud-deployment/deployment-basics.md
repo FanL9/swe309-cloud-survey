@@ -2,7 +2,7 @@
 
 Course:SWE309 - Introduction to Cloud Computing  
 Mission:Cloud Deployment  
-Status:Initial learning and planning
+Status:Deployed and verified on PythonAnywhere free tier (2026-11-23)
 
 ## 1. Purpose
 
@@ -25,20 +25,31 @@ The objective is to understand how the survey application can be hosted, configu
 | HTTPS | Encrypted communication over HTTP | Protects communication between users and the application |
 | Monitoring | Collecting system health and performance information | Helps identify errors and resource usage |
 
-## 3. Proposed Deployment Workflow
+## 3. Proposed Deployment Workflow and Result
 
-The initial deployment workflow is:
+The workflow below was executed, not planned. Each step lists its actual outcome.
 
-1. Obtain the application source code from the development team.
-2. Confirm the programming language, runtime version and dependencies.
-3. Confirm the application startup command and listening port.
-4. Prepare the hosting environment.
-5. Configure persistent data storage.
-6. Configure environment variables and access permissions.
-7. Enable HTTPS.
-8. Test application availability and data persistence.
-9. Configure logging and monitoring.
-10. Record deployment evidence and limitations.
+| Step | Action | Result |
+|---|---|---|
+| 1 | Upload `swe309-cloud-survey-main.zip` via the Files page and unzip | Extracted to `/home/CHANGXUZHU/swe309-cloud-survey-main` |
+| 2 | Confirm runtime | Python 3.10.12; Flask 3.1.3, gunicorn 27.0.1 from `app/requirements.txt` |
+| 3 | Create virtualenv | `mkvirtualenv --python=/usr/bin/python3.10 survey-env` |
+| 4 | Install dependencies | `pip install -r requirements.txt` succeeded |
+| 5 | Create web app | Manual configuration, Python 3.10, not the Flask template |
+| 6 | Set source code, working directory, virtualenv | `.../app`, `.../app`, `~/.virtualenvs/survey-env` |
+| 7 | Configure WSGI | `/var/www/CHANGXUZHU_pythonanywhere_com_wsgi.py` imports `from wsgi import app as application` |
+| 8 | Set environment variables | APP_ENV, SECRET_KEY, STAFF_USERNAME, STAFF_PASSWORD_HASH in the WSGI file only |
+| 9 | Enable Force HTTPS and reload | `http://` returns 302 to `https://` |
+| 10 | Verify | Survey form served, responses stored, staff area reachable after login |
+
+Two configuration problems were found and fixed during this step:
+
+- The web app had PythonAnywhere password protection enabled, which returned
+  `401 Authorization Required` for every request before it reached Flask. It was
+  disabled, because it would also block survey respondents.
+- The repository's Dockerfile defaults `DATABASE_PATH` to `/tmp/survey.db`, which
+  is not persistent. The cloud deployment sets the database path to the account
+  disk instead.
 
 ## 4. Important Deployment Considerations
 
@@ -85,29 +96,44 @@ The system should also release unnecessary resources when demand decreases, wher
 
 ## 5. Current Project Status
 
-At this stage, the repository contains the project structure and deployment planning documents.
+The application is deployed and publicly reachable at
+https://changxuzhu.pythonanywhere.com over HTTPS.
 
-The actual survey application framework, runtime, startup command, port and persistent storage implementation have not yet been confirmed.
+Verified on 2026-11-23:
 
-Therefore, no public-cloud deployment is claimed to have been completed.
+- The survey form loads and accepts submissions; six synthetic responses were stored.
+- The staff dashboard and response list show the stored records after login.
+- Invalid ratings are rejected with HTTP 400.
+- Unauthenticated requests to `/staff/`, `/staff/responses` and `/staff/export.csv`
+  are redirected to the login page (HTTP 302).
+- The SQLite file `app/instance/survey.db` persisted across a web-app reload; the
+  startup log reports `responses=6` and the row count is unchanged.
+- Session cookies carry `Secure`, `HttpOnly` and `SameSite=Lax`.
 
-## 6. Information Required Before Deployment
+Evidence for each item is indexed in `evidence/C2/README.md` (E01 to E12).
 
-The following information must be confirmed with the application development team:
+## 6. Confirmed Application Facts
 
-- Programming language and framework.
-- Runtime version.
-- Dependency installation instructions.
-- Application startup command.
-- Listening port.
-- Persistent data directory or database configuration.
-- Health-check endpoint, if available.
-- Required environment variable names.
+| Item | Confirmed value |
+|---|---|
+| Language and framework | Python 3.10.12, Flask 3.1.3 |
+| Production server | gunicorn 27.0.1 (not used on PythonAnywhere, which supplies its own WSGI server) |
+| Entry point | `app/wsgi.py`, exposing `app` |
+| Health check | `GET /health` returns JSON status |
+| Persistent data | SQLite at `app/instance/survey.db` on the account disk |
+| Logs | `app/logs/app.log`, plus stdout captured by the platform |
+| Configuration | Environment variables read in `app/backend/config.py` |
+| Secrets | `SECRET_KEY` and `STAFF_PASSWORD_HASH` set only in the WSGI file, never committed |
 
-## 7. Next Actions
+## 7. Limitations and Remaining Work
 
-1. Continue learning Docker and container fundamentals.
-2. Review the hosting and storage options proposed in the project architecture.
-3. Confirm application requirements when the development code becomes available.
-4. Prepare deployment configuration based on the final platform decision.
-5. Perform deployment tests and collect evidence only after the application is ready.
+- The free tier allows 100 CPU seconds per day, 512 MiB disk and one worker. It is a
+  verification environment, not a production platform.
+- No load test was performed; peak behaviour is design-only and derived from the
+  B2 assumptions (see `c2-e12-peak-design.md`).
+- No automated backup, alerting or log aggregation is configured.
+- The storage layer implements SQLite only; `STORAGE_BACKEND=firestore` is a
+  reserved value with no implementation behind it.
+- The production design recommended in B1/B2 remains Google Cloud Run with a
+  managed database; that deployment was not executed within this assignment.
+- The free account expires one month after signup, so the public URL is temporary.
