@@ -1,0 +1,12 @@
+Before reload
+$ ls -l .../app/instance/survey.db
+-rw-r--r-- 1 CHANGXUZHU registered_users 24576 Nov 23 15:31 survey.db
+$ sqlite3 .../app/instance/survey.db "select count(*) from responses;"
+6
+
+After Web-app reload (15:39), startup log line:
+2026-11-23 15:39:39,187 INFO survey app started env=production storage=sqlite
+  database=/home/CHANGXUZHU/swe309-cloud-survey-main/app/instance/survey.db responses=6
+
+$ sqlite3 .../app/instance/survey.db "select count(*) from responses;"
+6
