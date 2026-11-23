@@ -26,7 +26,7 @@
 
 <div class="row g-3 mb-4">
   <div class="col-6 col-xl-3">
-    <div class="card card-hero h-100"><div class="card-body p-3 d-flex align-items-start justify-content-between gap-2">
+    <div class="card card-solid tone-brand h-100"><div class="card-body p-3 d-flex align-items-start justify-content-between gap-2">
       <div>
         <p class="stat-label mb-1">Responses</p>
         <p class="stat-value mb-0">{{ total }}</p>
@@ -39,14 +39,14 @@
   {% set rating_icons = {"Good": "up", "OK": "mid", "Poor": "down"} %}
   {% for r in ratings %}
   <div class="col-6 col-xl-3">
-    <div class="card h-100"><div class="card-body p-3 d-flex align-items-start justify-content-between gap-2">
+    <div class="card card-solid tone-{{ r | lower }} h-100"><div class="card-body p-3 d-flex align-items-start justify-content-between gap-2">
       <div>
         <p class="stat-label mb-1">{{ r }}</p>
-        <p class="stat-value mb-0">{{ counts[r] }} <span class="fs-6 fw-semibold text-secondary">{{ pct[r] }}%</span></p>
+        <p class="stat-value mb-0">{{ counts[r] }} <span class="fs-6 fw-semibold">{{ pct[r] }}%</span></p>
         {% set d = counts[r] - prev_counts[r] %}
-        <p class="small mb-0 text-secondary">{{ "+" if d > 0 else "" }}{{ d }} vs previous day</p>
+        <p class="small mb-0 stat-sub">{{ "+" if d > 0 else "" }}{{ d }} vs previous day</p>
       </div>
-      <span class="stat-icon tile-{{ r | lower }}">{{ icon(rating_icons[r], "") }}</span>
+      <span class="stat-icon">{{ icon(rating_icons[r], "") }}</span>
     </div></div>
   </div>
   {% endfor %}

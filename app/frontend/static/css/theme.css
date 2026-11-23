@@ -1,34 +1,31 @@
 /* Company A survey theme.
  *
  * Loaded after the Soft UI Dashboard stylesheet. Design rules:
- *   - one accent colour (orange) on a white / near-white base
- *   - flat, saturated solid colours only: no gradients
+ *   - pure white base; large blocks of bold, fully saturated colour on it
+ *   - flat solid colours only: no gradients, no tints
+ *   - every data colour as loud as the orange brand
  *   - light borders instead of heavy shadows; minimal decoration
  */
 
 :root {
-  --brand: #ea580c;          /* orange-600: buttons, active nav, links */
-  --brand-hover: #c2410c;    /* orange-700 */
-  --brand-soft: #fff1e6;     /* tinted background for active / hover */
-  /* Rating colours: bright 500-level hues for charts, dots and icon tiles;
-     the same hue at 100 / 700 for the soft pills. Emerald, indigo and rose
-     sit evenly around the colour wheel with the orange brand, so all four
-     read clearly side by side without clashing. */
-  --good: #10b981;           /* emerald-500 */
-  --good-text: #047857;      /* emerald-700 */
-  --good-bg: #d1fae5;        /* emerald-100 */
-  --ok: #6366f1;             /* indigo-500 */
-  --ok-text: #4338ca;        /* indigo-700 */
-  --ok-bg: #e0e7ff;          /* indigo-100 */
-  --poor: #f43f5e;           /* rose-500 */
-  --poor-text: #be123c;      /* rose-700 */
-  --poor-bg: #ffe4e6;        /* rose-100 */
+  --brand: #ea580c;          /* orange: buttons, active nav, links, hero card */
+  --brand-hover: #c2410c;
+  --brand-soft: #fff1e6;     /* only for selected / hover backgrounds */
+  /* Rating colours, matched to the orange's saturation so none looks
+     washed out next to it. Orange vs electric blue is the strongest
+     complementary clash; green and hot red keep their usual meaning. */
+  --good: #00b85c;           /* vivid green */
+  --ok: #2e6bff;             /* electric blue */
+  --poor: #ff2d55;           /* hot red */
+  --good-text: var(--good);
+  --ok-text: var(--ok);
+  --poor-text: var(--poor);
   --muted: #9ca3af;          /* gray-400 */
-  --ink: #111827;            /* gray-900: headings */
+  --ink: #111827;            /* near black: headings, the dark card */
   --text: #374151;           /* gray-700: body text */
   --text-soft: #6b7280;      /* gray-500: secondary text */
-  --line: #e5e7eb;           /* gray-200: borders */
-  --page: #f7f7f8;           /* page background behind white cards */
+  --line: #ececec;           /* borders */
+  --page: #ffffff;           /* pure white, so colour blocks pop */
 
   --bs-primary: var(--brand);
   --bs-primary-rgb: 234, 88, 12;
@@ -132,12 +129,11 @@ a:hover { color: var(--brand-hover); }
   background: currentColor;
   flex: none;
 }
-.badge-good { background-color: var(--good-bg) !important; color: var(--good-text); }
-.badge-good::before { background: var(--good); }
-.badge-ok   { background-color: var(--ok-bg) !important; color: var(--ok-text); }
-.badge-ok::before { background: var(--ok); }
-.badge-poor { background-color: var(--poor-bg) !important; color: var(--poor-text); }
-.badge-poor::before { background: var(--poor); }
+/* Solid fill, white text and dot: same treatment as the orange buttons. */
+.badge-good { background-color: var(--good) !important; color: #fff; }
+.badge-ok   { background-color: var(--ok) !important; color: #fff; }
+.badge-poor { background-color: var(--poor) !important; color: #fff; }
+.badge-rating::before { background: rgba(255, 255, 255, 0.9); }
 .progress { background-color: var(--line); box-shadow: none; height: 8px; border-radius: 999px; }
 .progress-bar { background-image: none !important; box-shadow: none; border-radius: 999px; }
 
@@ -206,11 +202,18 @@ a:hover { color: var(--brand-hover); }
 .tile-ok { background: var(--ok); }
 .tile-poor { background: var(--poor); }
 
-/* One solid orange "hero" card per page draws the eye first */
-.card-hero { background: var(--brand); border-color: var(--brand); }
-.card-hero .stat-label, .card-hero .stat-value, .card-hero p { color: #fff !important; }
-.card-hero .stat-sub { color: rgba(255, 255, 255, 0.85) !important; }
-.card-hero .stat-icon { background: rgba(255, 255, 255, 0.22); }
+/* Metric cards as full blocks of colour on the white page */
+.card-solid { border: 0; color: #fff; }
+.card-solid .stat-label, .card-solid .stat-value, .card-solid p,
+.card-solid .stat-value span { color: #fff !important; }
+.card-solid .stat-sub { color: rgba(255, 255, 255, 0.88) !important; }
+.card-solid .stat-icon { background: rgba(255, 255, 255, 0.2); }
+.tone-brand { background: var(--brand); }
+.tone-ink { background: var(--ink); }
+.tone-good { background: var(--good); }
+.tone-ok { background: var(--ok); }
+.tone-poor { background: var(--poor); }
+.tone-ink .stat-icon { background: var(--brand); }
 
 /* Total in the middle of the doughnut */
 .chart-center {
@@ -234,7 +237,7 @@ a:hover { color: var(--brand-hover); }
   .print-only { display: block; }
   body { background: #fff; }
   .card { break-inside: avoid; }
-  .mix-bar span, .rating-dot, .badge-rating, .row-current td {
+  .mix-bar span, .rating-dot, .badge-rating, .row-current td, .card-solid, .stat-icon {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
 }

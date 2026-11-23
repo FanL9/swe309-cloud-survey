@@ -8,21 +8,21 @@
 
 {% set diff = today_total - yesterday_total %}
 {% set cards = [
-  ("Total responses", "{:,}".format(total), "All time", "inbox", "brand", True),
-  ("Today", today_total, ("+" if diff > 0 else "") ~ diff ~ " vs yesterday (" ~ yesterday_total ~ ")", "calendar", "brand", False),
-  ("Good rate", pct.Good ~ "%", counts.Good ~ " of " ~ total, "up", "good", False),
-  ("Poor rate", pct.Poor ~ "%", counts.Poor ~ " of " ~ total, "down", "poor", False),
+  ("Total responses", "{:,}".format(total), "All time", "inbox", "brand"),
+  ("Today", today_total, ("+" if diff > 0 else "") ~ diff ~ " vs yesterday (" ~ yesterday_total ~ ")", "calendar", "ink"),
+  ("Good rate", pct.Good ~ "%", counts.Good ~ " of " ~ total, "up", "good"),
+  ("Poor rate", pct.Poor ~ "%", counts.Poor ~ " of " ~ total, "down", "poor"),
 ] %}
 <div class="row g-3 mb-4">
-  {% for label, value, sub, ico, tone, hero in cards %}
+  {% for label, value, sub, ico, tone in cards %}
   <div class="col-6 col-xl-3">
-    <div class="card h-100 {{ 'card-hero' if hero }}"><div class="card-body p-3 d-flex align-items-start justify-content-between gap-2">
+    <div class="card card-solid tone-{{ tone }} h-100"><div class="card-body p-3 d-flex align-items-start justify-content-between gap-2">
       <div>
         <p class="stat-label mb-1">{{ label }}</p>
         <p class="stat-value mb-0">{{ value }}</p>
-        <p class="small mb-0 stat-sub text-secondary">{{ sub }}</p>
+        <p class="small mb-0 stat-sub">{{ sub }}</p>
       </div>
-      <span class="stat-icon tile-{{ tone }}">{{ icon(ico, "") }}</span>
+      <span class="stat-icon">{{ icon(ico, "") }}</span>
     </div></div>
   </div>
   {% endfor %}
