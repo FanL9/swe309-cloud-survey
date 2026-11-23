@@ -1,0 +1,36 @@
+2026-11-23 21:24:46,944 WARNING survey using the development demo staff account (never in production)
+2026-11-23 21:24:46,946 INFO survey app started env=development storage=sqlite database=<repo>/app\instance\survey.db responses=0
+2026-11-23 21:24:49,403 INFO survey request method=HEAD path=/ status=200 duration_ms=6.3
+2026-11-23 21:24:49,453 INFO survey request method=GET path=/ status=200 duration_ms=0.2
+2026-11-23 21:24:54,914 INFO survey request method=GET path=/ status=200 duration_ms=0.2
+2026-11-23 21:25:19,756 INFO survey response accepted channel=form response_id=R20261123-H9TE2Y rating=Good
+2026-11-23 21:25:19,756 INFO survey request method=POST path=/ status=303 duration_ms=4.9
+2026-11-23 21:25:19,766 INFO survey request method=GET path=/thanks/R20261123-H9TE2Y status=200 duration_ms=2.2
+2026-11-23 21:25:31,135 INFO survey request method=GET path=/ status=200 duration_ms=0.2
+2026-11-23 21:25:31,302 WARNING survey response rejected channel=form reason=invalid_rating value='Excellent'
+2026-11-23 21:25:31,302 INFO survey request method=POST path=/ status=400 duration_ms=0.4
+2026-11-23 21:25:43,048 INFO survey request method=GET path=/ status=200 duration_ms=0.2
+2026-11-23 21:25:43,215 INFO survey request method=GET path=/ status=200 duration_ms=0.2
+2026-11-23 21:25:44,381 WARNING survey response rejected channel=form reason=invalid_rating value='Excellent'
+2026-11-23 21:25:44,381 INFO survey request method=POST path=/ status=400 duration_ms=0.4
+2026-11-23 21:25:54,306 INFO survey response accepted channel=api response_id=R20261123-YFADEB rating=OK
+2026-11-23 21:25:54,307 INFO survey request method=POST path=/api/responses status=201 duration_ms=4.0
+2026-11-23 21:25:54,356 INFO survey response accepted channel=api response_id=R20261123-SXC9DS rating=Poor
+2026-11-23 21:25:54,356 INFO survey request method=POST path=/api/responses status=201 duration_ms=4.5
+2026-11-23 21:25:54,401 WARNING survey response rejected channel=api reason=invalid_rating value='good'
+2026-11-23 21:25:54,401 INFO survey request method=POST path=/api/responses status=400 duration_ms=0.2
+2026-11-23 21:25:59,542 INFO survey request method=GET path=/staff/login status=200 duration_ms=3.0
+2026-11-23 21:26:05,653 INFO survey staff login success user=staff
+2026-11-23 21:26:05,654 INFO survey request method=POST path=/staff/login status=302 duration_ms=82.4
+2026-11-23 21:26:05,674 INFO survey request method=GET path=/staff/ status=200 duration_ms=17.3
+2026-11-23 21:26:06,913 INFO survey request method=GET path=/staff/responses status=200 duration_ms=6.6
+2026-11-23 21:26:21,852 WARNING survey using the development demo staff account (never in production)
+2026-11-23 21:26:21,854 INFO survey app started env=development storage=sqlite database=<repo>/app\instance\survey.db responses=3
+2026-11-23 21:26:24,106 INFO survey request method=HEAD path=/ status=200 duration_ms=10.3
+2026-11-23 21:26:24,156 INFO survey request method=GET path=/ status=200 duration_ms=0.2
+2026-11-23 21:26:30,542 INFO survey request method=GET path=/staff/login status=200 duration_ms=2.4
+2026-11-23 21:26:37,155 INFO survey staff login success user=staff
+2026-11-23 21:26:37,155 INFO survey request method=POST path=/staff/login status=302 duration_ms=88.3
+2026-11-23 21:26:37,171 INFO survey request method=GET path=/staff/ status=200 duration_ms=12.2
+2026-11-23 21:26:38,360 INFO survey request method=GET path=/staff/responses status=200 duration_ms=6.3
+2026-11-23 21:26:38,554 INFO survey request method=GET path=/staff/ status=200 duration_ms=1.8
