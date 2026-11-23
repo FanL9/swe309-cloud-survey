@@ -1,0 +1,9 @@
+$ curl -i -sS -X POST "https://changxuzhu.pythonanywhere.com/api/responses" \
+    -H "Content-Type: application/json" -d '{"rating":"Excellent"}'
+
+HTTP/1.1 400 BAD REQUEST
+Content-Type: application/json
+Server: PythonAnywhere
+
+{"allowed":["Good","OK","Poor"],"error":"invalid_rating",
+ "message":"Rating must be exactly one of: Good, OK, Poor."}
