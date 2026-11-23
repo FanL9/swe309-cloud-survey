@@ -10,9 +10,18 @@
   --brand: #ea580c;          /* orange-600: buttons, active nav, links */
   --brand-hover: #c2410c;    /* orange-700 */
   --brand-soft: #fff1e6;     /* tinted background for active / hover */
-  --good: #16a34a;           /* green-600 */
-  --ok: #2563eb;             /* blue-600 (not orange, to stay distinct from the brand) */
-  --poor: #dc2626;           /* red-600 */
+  /* Rating colours: soft tinted pill + dark text + coloured dot.
+     OK is neutral slate on purpose: it means "neither good nor bad",
+     and keeps orange as the only warm accent on the page. */
+  --good: #10b981;           /* dot: emerald-500 */
+  --good-text: #047857;      /* emerald-700 */
+  --good-bg: #d1fae5;        /* emerald-100 */
+  --ok: #94a3b8;             /* dot: slate-400 */
+  --ok-text: #475569;        /* slate-600 */
+  --ok-bg: #f1f5f9;          /* slate-100 */
+  --poor: #f43f5e;           /* dot: rose-500 */
+  --poor-text: #be123c;      /* rose-700 */
+  --poor-bg: #ffe4e6;        /* rose-100 */
   --muted: #9ca3af;          /* gray-400 */
   --ink: #111827;            /* gray-900: headings */
   --text: #374151;           /* gray-700: body text */
@@ -100,9 +109,34 @@ a:hover { color: var(--brand-hover); }
   letter-spacing: 0.02em;
   border-radius: 0.375rem;
 }
-.badge-good { background-color: var(--good) !important; color: #fff; }
-.badge-ok   { background-color: var(--ok) !important; color: #fff; }
-.badge-poor { background-color: var(--poor) !important; color: #fff; }
+/* Rating pill: fixed width so every row lines up, dot + label left-aligned. */
+.badge-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 4.75rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.badge-rating::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.badge-good { background-color: var(--good-bg) !important; color: var(--good-text); }
+.badge-good::before { background: var(--good); }
+.badge-ok   { background-color: var(--ok-bg) !important; color: var(--ok-text); }
+.badge-ok::before { background: var(--ok); }
+.badge-poor { background-color: var(--poor-bg) !important; color: var(--poor-text); }
+.badge-poor::before { background: var(--poor); }
 .progress { background-color: var(--line); box-shadow: none; height: 8px; border-radius: 999px; }
 .progress-bar { background-image: none !important; box-shadow: none; border-radius: 999px; }
 

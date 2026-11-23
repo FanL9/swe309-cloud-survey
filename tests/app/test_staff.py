@@ -140,7 +140,7 @@ def test_pagination(staff, app):
     first = staff.get("/staff/responses").get_data(as_text=True)
     assert "Page 1 of 2" in first
     second = staff.get("/staff/responses?page=2").get_data(as_text=True)
-    assert second.count('class="badge badge-good"') == 5
+    assert second.count("badge-rating badge-good") == 5
 
 
 def test_lookup_by_exact_id(staff, app):
