@@ -1,0 +1,68 @@
+# C1 app check: runs the app tests and builds/starts the Docker image on Linux.
+# Only triggers when the C1 app, its tests or this file change, so other
+# modules (docs, processing, deploy) are not affected.
+name: C1 app check
+
+on:
+  push:
+    paths:
+      - "app/**"
+      - "tests/app/**"
+      - ".github/workflows/c1-app.yml"
+  pull_request:
+    paths:
+      - "app/**"
+      - "tests/app/**"
+      - ".github/workflows/c1-app.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Unit tests (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: pip install -r app/requirements-dev.txt
+      - name: Run tests
+        run: python -m pytest tests/app -v
+
+  docker:
+    name: Docker build and smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t survey-app app
+      - name: Start container
+        run: docker run -d --name survey -p 8080:8080 survey-app
+      - name: Wait for /health
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/health; then echo; exit 0; fi
+            sleep 1
+          done
+          echo "App did not become healthy"; exit 1
+      - name: Valid rating is accepted (201)
+        run: |
+          code=$(curl -s -o /tmp/out.json -w '%{http_code}' -X POST http://127.0.0.1:8080/api/responses \
+            -H 'Content-Type: application/json' -d '{"rating":"Good"}')
+          cat /tmp/out.json; echo
+          test "$code" = "201"
+      - name: Invalid rating is rejected (400)
+        run: |
+          code=$(curl -s -o /tmp/out.json -w '%{http_code}' -X POST http://127.0.0.1:8080/api/responses \
+            -H 'Content-Type: application/json' -d '{"rating":"Excellent"}')
+          cat /tmp/out.json; echo
+          test "$code" = "400"
+      - name: Survey page renders
+        run: curl -fsS http://127.0.0.1:8080/ | grep -q "How was your experience?"
+      - name: Container logs
+        if: always()
+        run: docker logs survey
