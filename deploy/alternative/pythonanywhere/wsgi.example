@@ -1,0 +1,22 @@
+"""PythonAnywhere WSGI configuration — example with placeholders only.
+
+Copy this content into /var/www/<username>_pythonanywhere_com_wsgi.py,
+replace the three placeholder values, then press Reload in the Web tab.
+
+Never commit real values: the secret key and the password hash live only in
+this file on the server.
+"""
+
+import os
+import sys
+
+path = '/home/<USERNAME>/swe309-cloud-survey-main/app'
+if path not in sys.path:
+    sys.path.insert(0, path)
+
+os.environ['APP_ENV'] = 'production'
+os.environ['SECRET_KEY'] = '<64 hex characters, from secrets.token_hex(32)>'
+os.environ['STAFF_USERNAME'] = '<staff login name>'
+os.environ['STAFF_PASSWORD_HASH'] = '<scrypt hash from python hash_password.py>'
+
+from wsgi import app as application  # noqa: E402
