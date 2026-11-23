@@ -1,9 +1,21 @@
 """CSV export in the format agreed with C3: response_id,rating,submitted_at."""
 
 import csv
+import io
 from pathlib import Path
 
 EXPORT_FIELDS = ("response_id", "rating", "submitted_at")
+
+
+def export_text(store):
+    """All stored responses as CSV text (used by the staff download)."""
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=EXPORT_FIELDS, extrasaction="ignore",
+                            lineterminator="\n")
+    writer.writeheader()
+    rows = store.list_all()
+    writer.writerows(rows)
+    return buffer.getvalue(), len(rows)
 
 
 def write_export(store, path):

@@ -36,6 +36,15 @@ def load_config(overrides=None):
     }
     if overrides:
         config.update(overrides)
+
+    production = config["APP_ENV"] == "production"
+    config.update({
+        "SESSION_COOKIE_HTTPONLY": True,
+        "SESSION_COOKIE_SAMESITE": "Lax",
+        "SESSION_COOKIE_SECURE": production,  # cookies only over HTTPS in the cloud
+        "PERMANENT_SESSION_LIFETIME": 8 * 60 * 60,  # one working day
+    })
+
     if not config["SECRET_KEY"]:
         # Fine for local runs; production must set a fixed key so sessions
         # survive restarts and work across instances.

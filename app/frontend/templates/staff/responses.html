@@ -1,0 +1,90 @@
+{% extends "staff/layout.html" %}
+{% from "partials/macros.html" import rating_badge %}
+{% set active = "responses" %}
+{% block title %}Responses{% endblock %}
+{% block heading %}Responses{% endblock %}
+{% block subheading %}{{ total }} {{ "response" if total == 1 else "responses" }}{% if active_filters %} match the filters{% endif %}{% endblock %}
+{% block content %}
+
+<div class="card mb-4">
+  <div class="card-body p-3">
+    <form method="get" action="{{ url_for('staff.responses') }}" class="row g-3 align-items-end">
+      <div class="col-12 col-md-3">
+        <label class="form-label" for="f-q">Response ID contains</label>
+        <input class="form-control mono" id="f-q" name="q" value="{{ filters.q }}" placeholder="e.g. R20261123">
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="form-label" for="f-rating">Rating</label>
+        <select class="form-select" id="f-rating" name="rating">
+          <option value="">All</option>
+          {% for r in ratings %}
+          <option value="{{ r }}" {% if filters.rating == r %}selected{% endif %}>{{ r }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="form-label" for="f-from">From</label>
+        <input class="form-control" type="date" id="f-from" name="from" value="{{ filters.from }}">
+      </div>
+      <div class="col-6 col-md-2">
+        <label class="form-label" for="f-to">To</label>
+        <input class="form-control" type="date" id="f-to" name="to" value="{{ filters.to }}">
+      </div>
+      <div class="col-6 col-md-3 d-flex gap-2">
+        <button class="btn btn-primary mb-0 flex-grow-1" type="submit">Apply</button>
+        {% if active_filters %}
+        <a class="btn btn-light mb-0" href="{{ url_for('staff.responses') }}">Reset</a>
+        {% endif %}
+      </div>
+    </form>
+    {% for e in errors %}
+    <div class="text-danger small mt-2">{{ e }}</div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table align-items-center mb-0">
+      <thead>
+        <tr>
+          <th class="ps-4">Response ID</th>
+          <th>Rating</th>
+          <th>Submitted (MYT)</th>
+          <th>Comment</th>
+          <th class="text-end pe-4"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td class="ps-4"><span class="mono fw-semibold" style="color: var(--ink)">{{ r.response_id }}</span></td>
+          <td>{{ rating_badge(r.rating) }}</td>
+          <td class="text-sm">{{ r.submitted_at[:10] }} <span class="text-secondary">{{ r.submitted_at[11:16] }}</span></td>
+          <td class="text-sm text-secondary">{{ "Yes" if r.comment else "—" }}</td>
+          <td class="text-end pe-4">
+            <a class="fw-semibold text-sm" href="{{ url_for('staff.response_detail', response_id=r.response_id) }}">View</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5"><div class="empty-state">No responses found.</div></td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if pages > 1 %}
+  <div class="card-footer d-flex justify-content-between align-items-center py-3 px-4">
+    <span class="small text-secondary">Page {{ page }} of {{ pages }}</span>
+    <div class="d-flex gap-2">
+      {% set base = dict(filters) %}
+      {% if page > 1 %}
+      <a class="btn btn-light btn-sm mb-0" href="{{ url_for('staff.responses', page=page - 1, **base) }}">Previous</a>
+      {% endif %}
+      {% if page < pages %}
+      <a class="btn btn-light btn-sm mb-0" href="{{ url_for('staff.responses', page=page + 1, **base) }}">Next</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

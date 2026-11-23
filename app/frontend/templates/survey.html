@@ -1,33 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="survey-card card shadow-sm mx-auto">
+<div class="survey-card card mx-auto">
   <div class="card-body p-4 p-md-5">
-    <h1 class="h3 mb-2">How was your experience?</h1>
-    <p class="text-body-secondary mb-4">Your answer helps us improve. It takes less than a minute.</p>
+    <h1 class="h3 fw-bold mb-2">How was your experience?</h1>
+    <p class="text-secondary mb-4">Your answer helps us improve. It takes less than a minute.</p>
 
     {% if error %}
-    <div class="alert alert-danger" role="alert">{{ error }}</div>
+    <div class="alert alert-danger text-white" role="alert">{{ error }}</div>
     {% endif %}
 
     <form method="post" action="{{ url_for('survey.survey_submit') }}">
       <fieldset class="mb-4">
-        <legend class="form-label fw-semibold fs-6">Rating</legend>
-        <div class="rating-options d-grid gap-2">
+        <legend class="form-label mb-2">Rating</legend>
+        <div class="d-grid gap-2">
           {% for rating in ratings %}
-          <input type="radio" class="btn-check" name="rating" id="rating-{{ rating }}"
-                 value="{{ rating }}" autocomplete="off" required>
-          <label class="btn btn-outline-primary btn-lg" for="rating-{{ rating }}">{{ rating }}</label>
+          <div class="rating-option">
+            <input type="radio" class="btn-check" name="rating" id="rating-{{ rating }}"
+                   value="{{ rating }}" autocomplete="off" required>
+            <label class="btn" for="rating-{{ rating }}">
+              <span>{{ rating }}</span>
+              <span class="rating-dot" style="background: var(--{{ rating | lower }})"></span>
+            </label>
+          </div>
           {% endfor %}
         </div>
       </fieldset>
 
       <div class="mb-4">
-        <label for="comment" class="form-label fw-semibold">Comment <span class="text-body-secondary fw-normal">(optional)</span></label>
+        <label for="comment" class="form-label">Comment <span class="text-secondary fw-normal">(optional)</span></label>
         <textarea class="form-control" id="comment" name="comment" rows="3" maxlength="500"
                   placeholder="Please do not include personal details such as your name or phone number.">{{ comment or "" }}</textarea>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-lg w-100">Submit</button>
+      <button type="submit" class="btn btn-primary btn-lg w-100 mb-0">Submit</button>
     </form>
   </div>
 </div>

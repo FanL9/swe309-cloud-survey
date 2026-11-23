@@ -41,9 +41,9 @@ C1 报告页暂定读取 `rating,count` 格式的 CSV（即 C3 现有 `counts.cs
 | `LOG_LEVEL` | `INFO` | 日志级别 | 现在 |
 | `LOG_FILE` | `app/logs/app.log` | 日志文件；设为空字符串则只输出到标准输出 | 现在 |
 | `EXPORT_DIR` | `app/instance/exports` | CSV 导出目录 | 现在 |
-| `SECRET_KEY` | 开发环境随机生成 | 会话签名密钥，生产环境必须设置，放在密钥管理服务里 | 员工登录（第 4 步）前 |
-| `STAFF_USERNAME` | 空 | 员工后台用户名 | 第 4 步 |
-| `STAFF_PASSWORD_HASH` | 空 | 员工密码的哈希值（不存明文），生成方法第 4 步补充 | 第 4 步 |
+| `SECRET_KEY` | 开发环境随机生成 | 会话签名密钥，生产环境必须设置，放在密钥管理服务里；多实例必须相同 | 现在（员工登录已上线） |
+| `STAFF_USERNAME` | 空 | 员工后台用户名；生产环境未设置则后台不可用 | 现在 |
+| `STAFF_PASSWORD_HASH` | 空 | 员工密码的哈希值（不存明文），在 `app/` 下运行 `python hash_password.py` 生成；放在密钥管理服务里 | 现在 |
 | `STORAGE_BACKEND` | `sqlite` | 存储后端；`firestore` 为预留值，尚未实现 | 若改用 Firestore |
 | `C3_COUNTS_PATH` | 空 | C3 聚合结果 CSV 路径 | 第 5 步 |
 

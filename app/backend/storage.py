@@ -106,6 +106,41 @@ class SQLiteResponseStore:
         finally:
             conn.close()
 
+    def search(self, rating=None, date_from=None, date_to=None, id_contains=None,
+               limit=20, offset=0):
+        """Filtered page of responses, newest first. Returns (rows, total).
+
+        Dates are 'YYYY-MM-DD' strings compared against the Malaysia-time date
+        part of submitted_at; both ends are inclusive.
+        """
+        where, params = [], []
+        if rating:
+            where.append("rating = ?")
+            params.append(rating)
+        if date_from:
+            where.append("substr(submitted_at, 1, 10) >= ?")
+            params.append(date_from)
+        if date_to:
+            where.append("substr(submitted_at, 1, 10) <= ?")
+            params.append(date_to)
+        if id_contains:
+            escaped = id_contains.upper().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+            where.append("response_id LIKE ? ESCAPE '\\'")
+            params.append(f"%{escaped}%")
+        clause = (" WHERE " + " AND ".join(where)) if where else ""
+
+        conn = self._connect()
+        try:
+            total = conn.execute(f"SELECT COUNT(*) FROM responses{clause}", params).fetchone()[0]
+            rows = conn.execute(
+                "SELECT response_id, rating, comment, submitted_at FROM responses"
+                f"{clause} ORDER BY id DESC LIMIT ? OFFSET ?",
+                [*params, limit, offset],
+            ).fetchall()
+            return [dict(r) for r in rows], total
+        finally:
+            conn.close()
+
     def count(self):
         conn = self._connect()
         try:

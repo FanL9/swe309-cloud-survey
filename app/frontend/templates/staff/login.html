@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Staff sign in{% endblock %}
+{% block content %}
+<div class="survey-card card mx-auto" style="max-width: 26rem">
+  <div class="card-body p-4 p-md-5">
+    <h1 class="h4 fw-bold mb-1">Staff sign in</h1>
+    <p class="text-secondary mb-4">Authorised Company A staff only.</p>
+
+    {% with messages = get_flashed_messages() %}
+      {% for message in messages %}
+      <div class="alert alert-light border" role="status">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    {% if error %}
+    <div class="alert alert-danger text-white" role="alert">{{ error }}</div>
+    {% endif %}
+
+    {% if not enabled %}
+    <div class="alert alert-light border mb-0" role="status">
+      Staff login is not configured on this server. Set <code>STAFF_USERNAME</code> and
+      <code>STAFF_PASSWORD_HASH</code>.
+    </div>
+    {% else %}
+    <form method="post" action="{{ url_for('staff.login') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="next" value="{{ next }}">
+      <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input class="form-control" id="username" name="username" value="{{ username or '' }}"
+               autocomplete="username" required autofocus>
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control" id="password" name="password" type="password"
+               autocomplete="current-password" required>
+      </div>
+      <button class="btn btn-primary btn-lg w-100 mb-0" type="submit">Sign in</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
