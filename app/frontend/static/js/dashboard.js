@@ -25,9 +25,12 @@
           label: r,
           data: data.series[r],
           backgroundColor: palette[r],
-          borderRadius: 4,
+          // White gaps between stacked segments give a cleaner, tiled look.
+          borderColor: "#fff",
+          borderWidth: 2,
+          borderRadius: 6,
           borderSkipped: false,
-          maxBarThickness: 28,
+          maxBarThickness: 30,
         };
       }),
     },
@@ -57,14 +60,16 @@
         data: data.distribution,
         backgroundColor: ratings.map(function (r) { return palette[r]; }),
         borderColor: "#fff",
-        borderWidth: 3,
+        borderWidth: 4,
+        borderRadius: 8,
+        spacing: 2,
         hoverOffset: 4,
       }],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      cutout: "70%",
+      cutout: "68%",
       plugins: { legend: { display: false } },
     },
   });
