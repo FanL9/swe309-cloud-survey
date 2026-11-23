@@ -1,0 +1,14 @@
+2026-11-23 15:37:34,716 WARNING survey response rejected channel=api reason=invalid_rating value='Excellent'
+2026-11-23 15:37:34,720 INFO survey request method=POST path=/api/responses status=400 duration_ms=4.8
+2026-11-23 15:38:00,508 INFO survey request method=GET path=/staff/ status=302 duration_ms=0.8
+2026-11-23 15:38:01,912 INFO survey request method=GET path=/staff/export.csv status=302 duration_ms=0.2
+2026-11-23 15:38:03,327 INFO survey request method=GET path=/staff/responses status=302 duration_ms=3.2
+2026-11-23 15:39:39,187 INFO survey app started env=production storage=sqlite responses=6
+2026-11-23 15:39:59,245 INFO survey request method=GET path=/staff/ status=200 duration_ms=138.8
+2026-11-23 15:40:34,548 INFO survey request method=GET path=/staff/ status=200 duration_ms=19.5
+2026-11-23 15:40:47,308 INFO survey staff export user=CHANGXUZHU rows=6
+2026-11-23 15:40:47,405 INFO survey request method=GET path=/staff/export.csv status=200 duration_ms=103.5
+2026-11-23 15:42:46,980 INFO survey request method=GET path=/staff/responses status=200 duration_ms=33.7
+2026-11-23 15:43:15,195 INFO survey request method=GET path=/ status=200 duration_ms=16.0
+2026-11-23 15:47:38,556 INFO survey request method=GET path=/staff/login status=200 duration_ms=12.8
+2026-11-23 15:48:02,390 INFO survey request method=GET path=/staff/login status=200 duration_ms=3.2
