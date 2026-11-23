@@ -1,42 +1,31 @@
 {% extends "staff/layout.html" %}
+{% from "partials/macros.html" import icon %}
 {% set active = "dashboard" %}
 {% block title %}Dashboard{% endblock %}
 {% block heading %}Dashboard{% endblock %}
 {% block subheading %}Live data from the response store{% endblock %}
 {% block content %}
 
+{% set diff = today_total - yesterday_total %}
+{% set cards = [
+  ("Total responses", "{:,}".format(total), "All time", "inbox", "brand", True),
+  ("Today", today_total, ("+" if diff > 0 else "") ~ diff ~ " vs yesterday (" ~ yesterday_total ~ ")", "calendar", "brand", False),
+  ("Good rate", pct.Good ~ "%", counts.Good ~ " of " ~ total, "up", "good", False),
+  ("Poor rate", pct.Poor ~ "%", counts.Poor ~ " of " ~ total, "down", "poor", False),
+] %}
 <div class="row g-3 mb-4">
+  {% for label, value, sub, ico, tone, hero in cards %}
   <div class="col-6 col-xl-3">
-    <div class="card h-100"><div class="card-body p-3">
-      <p class="stat-label mb-1">Total responses</p>
-      <p class="stat-value mb-0">{{ "{:,}".format(total) }}</p>
-      <p class="small text-secondary mb-0">All time</p>
+    <div class="card h-100 {{ 'card-hero' if hero }}"><div class="card-body p-3 d-flex align-items-start justify-content-between gap-2">
+      <div>
+        <p class="stat-label mb-1">{{ label }}</p>
+        <p class="stat-value mb-0">{{ value }}</p>
+        <p class="small mb-0 stat-sub text-secondary">{{ sub }}</p>
+      </div>
+      <span class="stat-icon tile-{{ tone }}">{{ icon(ico, "") }}</span>
     </div></div>
   </div>
-  <div class="col-6 col-xl-3">
-    <div class="card h-100"><div class="card-body p-3">
-      <p class="stat-label mb-1">Today</p>
-      <p class="stat-value mb-0">{{ today_total }}</p>
-      {% set diff = today_total - yesterday_total %}
-      <p class="small mb-0 {{ 'text-good' if diff > 0 else ('text-poor' if diff < 0 else 'text-secondary') }}">
-        {{ "+" if diff > 0 else "" }}{{ diff }} vs yesterday ({{ yesterday_total }})
-      </p>
-    </div></div>
-  </div>
-  <div class="col-6 col-xl-3">
-    <div class="card h-100"><div class="card-body p-3">
-      <p class="stat-label mb-1">Good rate</p>
-      <p class="stat-value mb-0" style="color: var(--good-text)">{{ pct.Good }}%</p>
-      <p class="small text-secondary mb-0">{{ counts.Good }} of {{ total }}</p>
-    </div></div>
-  </div>
-  <div class="col-6 col-xl-3">
-    <div class="card h-100"><div class="card-body p-3">
-      <p class="stat-label mb-1">Poor rate</p>
-      <p class="stat-value mb-0" style="color: var(--poor-text)">{{ pct.Poor }}%</p>
-      <p class="small text-secondary mb-0">{{ counts.Poor }} of {{ total }}</p>
-    </div></div>
-  </div>
+  {% endfor %}
 </div>
 
 <div class="row g-3">
@@ -58,7 +47,10 @@
         <p class="small text-secondary mb-0">All time</p>
       </div>
       <div class="card-body px-4 pb-4">
-        <div class="chart-box chart-box-sm"><canvas id="dist-chart" aria-label="Rating distribution"></canvas></div>
+        <div class="chart-box chart-box-sm">
+          <canvas id="dist-chart" aria-label="Rating distribution"></canvas>
+          <div class="chart-center"><strong>{{ "{:,}".format(total) }}</strong><span>responses</span></div>
+        </div>
         <ul class="list-unstyled mb-0 mt-3">
           {% for r in ratings %}
           <li class="d-flex align-items-center justify-content-between py-2 {% if not loop.last %}border-bottom{% endif %}" style="border-color: var(--line) !important">

@@ -139,7 +139,7 @@ class SQLiteResponseStore:
             total = conn.execute(f"SELECT COUNT(*) FROM responses{clause}", params).fetchone()[0]
             rows = conn.execute(
                 "SELECT response_id, rating, comment, submitted_at FROM responses"
-                f"{clause} ORDER BY id DESC LIMIT ? OFFSET ?",
+                f"{clause} ORDER BY submitted_at DESC, id DESC LIMIT ? OFFSET ?",
                 [*params, limit, offset],
             ).fetchall()
             return [dict(r) for r in rows], total

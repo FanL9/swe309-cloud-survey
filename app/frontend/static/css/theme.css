@@ -10,16 +10,17 @@
   --brand: #ea580c;          /* orange-600: buttons, active nav, links */
   --brand-hover: #c2410c;    /* orange-700 */
   --brand-soft: #fff1e6;     /* tinted background for active / hover */
-  /* Rating colours: soft tinted pill + dark text + coloured dot.
-     OK is neutral slate on purpose: it means "neither good nor bad",
-     and keeps orange as the only warm accent on the page. */
-  --good: #10b981;           /* dot: emerald-500 */
+  /* Rating colours: bright 500-level hues for charts, dots and icon tiles;
+     the same hue at 100 / 700 for the soft pills. Emerald, indigo and rose
+     sit evenly around the colour wheel with the orange brand, so all four
+     read clearly side by side without clashing. */
+  --good: #10b981;           /* emerald-500 */
   --good-text: #047857;      /* emerald-700 */
   --good-bg: #d1fae5;        /* emerald-100 */
-  --ok: #94a3b8;             /* dot: slate-400 */
-  --ok-text: #475569;        /* slate-600 */
-  --ok-bg: #f1f5f9;          /* slate-100 */
-  --poor: #f43f5e;           /* dot: rose-500 */
+  --ok: #6366f1;             /* indigo-500 */
+  --ok-text: #4338ca;        /* indigo-700 */
+  --ok-bg: #e0e7ff;          /* indigo-100 */
+  --poor: #f43f5e;           /* rose-500 */
   --poor-text: #be123c;      /* rose-700 */
   --poor-bg: #ffe4e6;        /* rose-100 */
   --muted: #9ca3af;          /* gray-400 */
@@ -192,6 +193,32 @@ a:hover { color: var(--brand-hover); }
 
 /* --- Dashboard and report ----------------------------------------------------------- */
 .stat-value { color: var(--ink); font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
+
+/* Solid colour icon tiles on the metric cards */
+.stat-icon {
+  width: 2.75rem; height: 2.75rem; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 0.75rem; color: #fff;
+}
+.stat-icon svg { width: 22px; height: 22px; }
+.tile-brand { background: var(--brand); }
+.tile-good { background: var(--good); }
+.tile-ok { background: var(--ok); }
+.tile-poor { background: var(--poor); }
+
+/* One solid orange "hero" card per page draws the eye first */
+.card-hero { background: var(--brand); border-color: var(--brand); }
+.card-hero .stat-label, .card-hero .stat-value, .card-hero p { color: #fff !important; }
+.card-hero .stat-sub { color: rgba(255, 255, 255, 0.85) !important; }
+.card-hero .stat-icon { background: rgba(255, 255, 255, 0.22); }
+
+/* Total in the middle of the doughnut */
+.chart-center {
+  position: absolute; inset: 0; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.chart-center strong { color: var(--ink); font-size: 1.6rem; line-height: 1.1; }
+.chart-center span { color: var(--text-soft); font-size: 0.75rem; font-weight: 600; }
 .text-good { color: var(--good-text) !important; }
 .text-poor { color: var(--poor-text) !important; }
 .chart-box { position: relative; height: 300px; }
