@@ -1,0 +1,46 @@
+app/   (Flask application, deploy root)
+  app/.dockerignore
+  app/.env.example
+  app/Dockerfile
+  app/README.md
+  app/backend/README.md
+  app/backend/__init__.py
+  app/backend/auth.py
+  app/backend/config.py
+  app/backend/export.py
+  app/backend/logging_setup.py
+  app/backend/reports.py
+  app/backend/routes.py
+  app/backend/staff.py
+  app/backend/storage.py
+  app/backend/validation.py
+  app/export_csv.py
+  app/frontend/README.md
+  app/frontend/static/css/theme.css
+  app/frontend/static/js/dashboard.js
+  app/frontend/templates/base.html
+  app/frontend/templates/error.html
+  app/frontend/templates/partials/head.html
+  app/frontend/templates/partials/macros.html
+  app/frontend/templates/staff/dashboard.html
+  app/frontend/templates/staff/layout.html
+  app/frontend/templates/staff/login.html
+  app/frontend/templates/staff/report.html
+  app/frontend/templates/staff/response_detail.html
+  app/frontend/templates/staff/responses.html
+  app/frontend/templates/survey.html
+  app/frontend/templates/thanks.html
+  app/hash_password.py
+  app/requirements-dev.txt
+  app/requirements.txt
+  app/run.py
+  app/seed_demo.py
+  app/wsgi.py
+  app/frontend/static/vendor/   (Soft UI Dashboard CSS, Chart.js; MIT)
+
+tests/app/
+  tests/app/README.md
+  tests/app/conftest.py
+  tests/app/test_dashboard.py
+  tests/app/test_staff.py
+  tests/app/test_survey.py

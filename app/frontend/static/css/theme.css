@@ -62,6 +62,10 @@ a:hover { color: var(--brand-hover); }
 }
 .text-primary { color: var(--brand) !important; }
 
+/* --- Alerts: solid, no template gradients ---------------------------------- */
+.alert { background-image: none !important; border: 0; border-radius: 0.75rem; font-weight: 500; }
+.alert-danger { background-color: #e5484d !important; color: #fff !important; }
+
 /* --- Cards: flat, bordered ------------------------------------------------- */
 .card {
   border: 1px solid var(--line);

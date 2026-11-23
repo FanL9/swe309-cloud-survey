@@ -1,0 +1,5 @@
+SQLite file: app/instance/survey.db   table: responses
+id  response_id        rating submitted_at               comment
+1   R20261123-H9TE2Y   Good   2026-11-23T21:25:19+08:00  Quick delivery and friendly support.
+2   R20261123-YFADEB   OK     2026-11-23T21:25:54+08:00  Average experience.
+3   R20261123-SXC9DS   Poor   2026-11-23T21:25:54+08:00  Parcel arrived late.
