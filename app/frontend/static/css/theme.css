@@ -1,0 +1,161 @@
+/* Company A survey theme.
+ *
+ * Loaded after the Soft UI Dashboard stylesheet. Design rules:
+ *   - one accent colour (orange) on a white / near-white base
+ *   - flat, saturated solid colours only: no gradients
+ *   - light borders instead of heavy shadows; minimal decoration
+ */
+
+:root {
+  --brand: #ea580c;          /* orange-600: buttons, active nav, links */
+  --brand-hover: #c2410c;    /* orange-700 */
+  --brand-soft: #fff1e6;     /* tinted background for active / hover */
+  --good: #16a34a;           /* green-600 */
+  --ok: #2563eb;             /* blue-600 (not orange, to stay distinct from the brand) */
+  --poor: #dc2626;           /* red-600 */
+  --muted: #9ca3af;          /* gray-400 */
+  --ink: #111827;            /* gray-900: headings */
+  --text: #374151;           /* gray-700: body text */
+  --text-soft: #6b7280;      /* gray-500: secondary text */
+  --line: #e5e7eb;           /* gray-200: borders */
+  --page: #f7f7f8;           /* page background behind white cards */
+
+  --bs-primary: var(--brand);
+  --bs-primary-rgb: 234, 88, 12;
+  --bs-link-color: var(--brand);
+  --bs-link-hover-color: var(--brand-hover);
+  --bs-body-color: var(--text);
+  --bs-body-font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--bs-body-font-family);
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { color: var(--ink); }
+a { color: var(--brand); }
+a:hover { color: var(--brand-hover); }
+.text-secondary, .text-muted { color: var(--text-soft) !important; }
+
+/* --- No gradients anywhere ------------------------------------------------ */
+[class*="bg-gradient-"] { background-image: none !important; }
+.bg-gradient-primary, .bg-primary { background-color: var(--brand) !important; }
+.bg-gradient-success, .bg-success { background-color: var(--good) !important; }
+.bg-gradient-info, .bg-info { background-color: var(--ok) !important; }
+.bg-gradient-danger, .bg-danger { background-color: var(--poor) !important; }
+.bg-gradient-secondary, .bg-secondary { background-color: var(--muted) !important; }
+.bg-gradient-dark, .bg-dark { background-color: var(--ink) !important; }
+.text-gradient {
+  background-image: none !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+.text-primary { color: var(--brand) !important; }
+
+/* --- Cards: flat, bordered ------------------------------------------------- */
+.card {
+  border: 1px solid var(--line);
+  border-radius: 0.875rem;
+  box-shadow: none;
+}
+.card .card-header { background: transparent; border-bottom: 0; }
+
+/* --- Buttons ----------------------------------------------------------------- */
+.btn { box-shadow: none !important; text-transform: none; letter-spacing: 0; font-weight: 600; }
+.btn:hover:not(.btn-icon-only) { transform: none; }
+.btn-primary, .btn.bg-gradient-primary {
+  background-color: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active,
+.btn.bg-gradient-primary:hover {
+  background-color: var(--brand-hover) !important;
+  border-color: var(--brand-hover) !important;
+  color: #fff;
+}
+.btn-outline-primary { color: var(--brand); border-color: var(--brand); }
+.btn-outline-primary:hover { background-color: var(--brand); border-color: var(--brand); color: #fff; }
+.btn-light { background: #fff; border: 1px solid var(--line); color: var(--text); }
+.btn-light:hover { background: var(--page); color: var(--ink); }
+
+/* --- Forms -------------------------------------------------------------------- */
+.form-control, .form-select {
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  color: var(--ink);
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.18);
+}
+.form-label, label { color: var(--ink); font-weight: 600; font-size: 0.875rem; }
+
+/* --- Badges and progress bars: solid colours ------------------------------- */
+.badge {
+  background-image: none !important;
+  box-shadow: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 0.375rem;
+}
+.badge-good { background-color: var(--good) !important; color: #fff; }
+.badge-ok   { background-color: var(--ok) !important; color: #fff; }
+.badge-poor { background-color: var(--poor) !important; color: #fff; }
+.progress { background-color: var(--line); box-shadow: none; height: 8px; border-radius: 999px; }
+.progress-bar { background-image: none !important; box-shadow: none; border-radius: 999px; }
+
+/* --- Tables ------------------------------------------------------------------- */
+.table > :not(caption) > * > * { border-bottom-color: var(--line); }
+.table thead th {
+  color: var(--text-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 1;
+}
+.table tbody tr:hover { background-color: #fafafa; }
+.mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; letter-spacing: 0.02em; }
+
+/* --- Staff sidebar -------------------------------------------------------------- */
+.sidenav { background: #fff; border: 1px solid var(--line) !important; box-shadow: none !important; }
+.sidenav .navbar-brand { color: var(--ink); }
+.brand-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; border-radius: 0.5rem;
+  background: var(--brand); color: #fff; font-weight: 800;
+}
+.sidenav .nav-link {
+  color: var(--text);
+  border-radius: 0.5rem;
+  margin: 0 0.5rem 0.25rem;
+  padding: 0.6rem 0.75rem;
+  font-weight: 500;
+  box-shadow: none !important;
+}
+.sidenav .nav-link:hover { background: var(--page); color: var(--ink); }
+.sidenav .nav-link.active { background: var(--brand-soft) !important; color: var(--brand) !important; font-weight: 700; }
+.nav-icon { width: 18px; height: 18px; margin-right: 0.75rem; flex: none; }
+
+/* --- Survey (public) pages ------------------------------------------------------ */
+.public-shell { min-height: 100vh; display: flex; flex-direction: column; }
+.public-top { border-bottom: 1px solid var(--line); background: #fff; }
+.survey-card { max-width: 34rem; }
+.rating-option { display: block; }
+.rating-option .btn {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 1rem 1.25rem; margin: 0;
+  background: #fff; border: 2px solid var(--line); color: var(--ink);
+  font-size: 1rem; border-radius: 0.75rem;
+}
+.rating-option .btn:hover { border-color: var(--brand); }
+.btn-check:checked + .btn { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+.btn-check:focus-visible + .btn { box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.25) !important; }
+.rating-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.response-id { letter-spacing: 0.06em; word-break: break-all; color: var(--brand); }
+
+/* --- Small helpers ------------------------------------------------------------------ */
+.stat-label { color: var(--text-soft); font-size: 0.8rem; font-weight: 600; }
+.empty-state { padding: 3rem 1rem; text-align: center; color: var(--text-soft); }

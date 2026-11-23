@@ -4,6 +4,8 @@ import time
 
 from flask import Flask, g, jsonify, render_template, request
 
+from . import staff
+from .auth import DEV_USERNAME, LoginThrottle, csrf_token, current_staff, resolve_staff_account
 from .config import APP_DIR, load_config
 from .logging_setup import setup_logging
 from .routes import bp
@@ -25,10 +27,22 @@ def create_app(overrides=None):
     store = make_store(config)
     store.init_schema()
     app.extensions["response_store"] = store
+    app.extensions["login_throttle"] = LoginThrottle()
     app.register_blueprint(bp)
+    app.register_blueprint(staff.bp)
+
+    staff_user, staff_hash = resolve_staff_account(config)
+    app.config["STAFF_ACCOUNT_USERNAME"] = staff_user
+    app.config["STAFF_ACCOUNT_HASH"] = staff_hash
+    if staff_user is None:
+        log.warning("staff area disabled: set STAFF_USERNAME and STAFF_PASSWORD_HASH")
+    elif staff_user == DEV_USERNAME and not config["STAFF_USERNAME"]:
+        log.warning("using the development demo staff account (never in production)")
 
     if config.get("SECRET_KEY_GENERATED") and config["APP_ENV"] == "production":
         log.warning("SECRET_KEY is not set; using a random key (set it before enabling staff login)")
+
+    app.jinja_env.globals.update(csrf_token=csrf_token, current_staff=current_staff)
 
     @app.before_request
     def _start_timer():
@@ -46,6 +60,13 @@ def create_app(overrides=None):
 
     def _wants_json():
         return request.path.startswith("/api/") or request.path == "/health"
+
+    @app.errorhandler(400)
+    def _bad_request(_err):
+        if _wants_json():
+            return jsonify(error="bad_request"), 400
+        return render_template("error.html", code=400,
+                               message="The form expired or was invalid. Please try again."), 400
 
     @app.errorhandler(404)
     def _not_found(_err):

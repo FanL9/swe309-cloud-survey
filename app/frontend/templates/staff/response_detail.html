@@ -1,0 +1,29 @@
+{% extends "staff/layout.html" %}
+{% from "partials/macros.html" import rating_badge, icon %}
+{% set active = "responses" %}
+{% block title %}{{ r.response_id }}{% endblock %}
+{% block heading %}Response details{% endblock %}
+{% block subheading %}Support-desk lookup{% endblock %}
+{% block content %}
+<a class="d-inline-flex align-items-center small fw-semibold mb-3" href="{{ url_for('staff.responses') }}">{{ icon("back", "nav-icon me-1") }}All responses</a>
+<div class="card" style="max-width: 40rem">
+  <div class="card-body p-4">
+    <p class="stat-label mb-1">Response ID</p>
+    <p class="mono fs-4 fw-bold mb-4" style="color: var(--ink)">{{ r.response_id }}</p>
+    <div class="row g-4">
+      <div class="col-6">
+        <p class="stat-label mb-1">Rating</p>
+        <div>{{ rating_badge(r.rating) }}</div>
+      </div>
+      <div class="col-6">
+        <p class="stat-label mb-1">Submitted (MYT)</p>
+        <p class="mb-0" style="color: var(--ink)">{{ r.submitted_at[:10] }} {{ r.submitted_at[11:19] }}</p>
+      </div>
+      <div class="col-12">
+        <p class="stat-label mb-1">Comment</p>
+        <p class="mb-0" style="color: var(--ink); white-space: pre-wrap">{{ r.comment or "No comment." }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

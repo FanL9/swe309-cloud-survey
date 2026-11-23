@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Thank you{% endblock %}
 {% block content %}
-<div class="survey-card card shadow-sm mx-auto text-center">
+<div class="survey-card card mx-auto text-center">
   <div class="card-body p-4 p-md-5">
-    <h1 class="h3 mb-3">Thank you!</h1>
-    <p class="text-body-secondary">Your response has been recorded.</p>
-    <p class="mb-1">Your reference number</p>
-    <p class="response-id fs-4 fw-semibold font-monospace">{{ response_id }}</p>
-    <p class="small text-body-secondary mb-4">Quote this number if you contact our support desk.</p>
-    <a class="btn btn-outline-secondary" href="{{ url_for('survey.survey_form') }}">Submit another response</a>
+    <h1 class="h3 fw-bold mb-2">Thank you!</h1>
+    <p class="text-secondary mb-4">Your response has been recorded.</p>
+    <p class="stat-label mb-1">Your reference number</p>
+    <p class="response-id mono fs-3 fw-bold mb-2">{{ response_id }}</p>
+    <p class="small text-secondary mb-4">Quote this number if you contact our support desk.</p>
+    <a class="btn btn-light mb-0" href="{{ url_for('survey.survey_form') }}">Submit another response</a>
   </div>
 </div>
 {% endblock %}
